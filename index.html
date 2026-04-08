@@ -395,6 +395,341 @@
 
 <script>
 // ═══════════════════════════════════════════════════
+//  TRANSLATIONS
+// ═══════════════════════════════════════════════════
+const LANGS = {
+  ru: {
+    siteTitle:'Статьевед', feed:'Лента', write:'Написать',
+    tagline:'Публикуйте научные статьи', taglineSub:'Делитесь знаниями с научным сообществом',
+    chName:'Назовите свой канал', chLink:'Ссылка на Telegram, YouTube, Instagram...',
+    artTitle:'Название статьи', artBody:'Напишите свою статью...',
+    addImage:'Добавить изображение (необязательно)', publish:'Опубликовать статью',
+    published:'Опубликовано ✓', feedTitle:'Лента статей', feedSub:'Все опубликованные материалы',
+    noArticles:'Пока нет ни одной статьи.', back:'Назад', toFeed:'Лента',
+    toMyChannel:'Мой канал', myChannel:'Мой канал', myArticles:'Мои статьи',
+    settingsTitle:'Настройки канала', settingsSub:'Измени имя, фото и ссылки на соцсети',
+    chNameLabel:'Название канала', socialsLabel:'Ссылки на соцсети', save:'Сохранить',
+    saved:'Сохранено ✓', photoHint:'Нажми, чтобы изменить', photoLabel:'Фото канала',
+    likes:'Нравится', dislikes:'Не нравится', views:'Просмотры',
+    comments:'Комментарии', subscribe:'Подписаться', subscribed:'✓ Подписан',
+    unsubscribed:'Вы отписались от', subscribedTo:'Вы подписались на',
+    writeComment:'Напишите комментарий...', send:'Отправить',
+    anonymous:'Аноним', settingsSaved:'Настройки сохранены!',
+    spamText:'⚠️ Похоже, это спам или бессмысленный текст. Пожалуйста, напишите настоящую статью.',
+    indecent:'🚫 Содержит недопустимые слова и не может быть опубликовано. Соблюдайте культуру общения.',
+    commentSpam:'⚠️ Комментарий похож на спам и не был добавлен.',
+    commentIndecent:'🚫 Комментарий содержит недопустимые слова и не был добавлен.',
+    readMore:'Читать →', articlesOf:'статей', subsLabel:'подп.',
+    channelArticles:'Статьи канала', editing:'Редактирование',
+    artPublished:'Статья опубликована!', artPublishedBy:'Статья от',
+  },
+  pt: {
+    siteTitle:'Статьевед', feed:'Feed', write:'Escrever',
+    tagline:'Publique artigos científicos', taglineSub:'Partilhe conhecimento com a comunidade científica',
+    chName:'Nome do seu canal', chLink:'Link Telegram, YouTube, Instagram...',
+    artTitle:'Título do artigo', artBody:'Escreva o seu artigo...',
+    addImage:'Adicionar imagem (opcional)', publish:'Publicar artigo',
+    published:'Publicado ✓', feedTitle:'Feed de artigos', feedSub:'Todos os materiais publicados',
+    noArticles:'Ainda não há artigos.', back:'Voltar', toFeed:'Feed',
+    toMyChannel:'Meu canal', myChannel:'Meu canal', myArticles:'Meus artigos',
+    settingsTitle:'Definições do canal', settingsSub:'Edita nome, foto e redes sociais',
+    chNameLabel:'Nome do canal', socialsLabel:'Links das redes sociais', save:'Guardar',
+    saved:'Guardado ✓', photoHint:'Clica para alterar', photoLabel:'Foto do canal',
+    likes:'Gosto', dislikes:'Não gosto', views:'Visualizações',
+    comments:'Comentários', subscribe:'Subscrever', subscribed:'✓ Subscrito',
+    unsubscribed:'Cancelou subscrição de', subscribedTo:'Subscreveu',
+    writeComment:'Escreva um comentário...', send:'Enviar',
+    anonymous:'Anónimo', settingsSaved:'Definições guardadas!',
+    spamText:'⚠️ Parece spam ou texto sem sentido. Por favor escreve um artigo real.',
+    indecent:'🚫 Contém palavras inadequadas. Por favor respeita as regras de comunicação.',
+    commentSpam:'⚠️ O comentário parece spam e não foi adicionado.',
+    commentIndecent:'🚫 O comentário contém palavras inadequadas e não foi adicionado.',
+    readMore:'Ler →', articlesOf:'artigos', subsLabel:'seg.',
+    channelArticles:'Artigos do canal', editing:'A editar',
+    artPublished:'Artigo publicado!', artPublishedBy:'Artigo de',
+  },
+  es: {
+    siteTitle:'Статьевед', feed:'Feed', write:'Escribir',
+    tagline:'Publica artículos científicos', taglineSub:'Comparte conocimiento con la comunidad científica',
+    chName:'Nombre de tu canal', chLink:'Enlace Telegram, YouTube, Instagram...',
+    artTitle:'Título del artículo', artBody:'Escribe tu artículo...',
+    addImage:'Agregar imagen (opcional)', publish:'Publicar artículo',
+    published:'Publicado ✓', feedTitle:'Feed de artículos', feedSub:'Todos los materiales publicados',
+    noArticles:'Aún no hay artículos.', back:'Volver', toFeed:'Feed',
+    toMyChannel:'Mi canal', myChannel:'Mi canal', myArticles:'Mis artículos',
+    settingsTitle:'Configuración del canal', settingsSub:'Edita nombre, foto y redes sociales',
+    chNameLabel:'Nombre del canal', socialsLabel:'Enlaces de redes sociales', save:'Guardar',
+    saved:'Guardado ✓', photoHint:'Haz clic para cambiar', photoLabel:'Foto del canal',
+    likes:'Me gusta', dislikes:'No me gusta', views:'Vistas',
+    comments:'Comentarios', subscribe:'Suscribirse', subscribed:'✓ Suscrito',
+    unsubscribed:'Cancelaste suscripción de', subscribedTo:'Te suscribiste a',
+    writeComment:'Escribe un comentario...', send:'Enviar',
+    anonymous:'Anónimo', settingsSaved:'¡Configuración guardada!',
+    spamText:'⚠️ Parece spam o texto sin sentido. Por favor escribe un artículo real.',
+    indecent:'🚫 Contiene palabras inapropiadas. Por favor respeta las normas de comunicación.',
+    commentSpam:'⚠️ El comentario parece spam y no fue añadido.',
+    commentIndecent:'🚫 El comentario contiene palabras inapropiadas y no fue añadido.',
+    readMore:'Leer →', articlesOf:'artículos', subsLabel:'sus.',
+    channelArticles:'Artículos del canal', editing:'Editando',
+    artPublished:'¡Artículo publicado!', artPublishedBy:'Artículo de',
+  },
+  en: {
+    siteTitle:'Статьевед', feed:'Feed', write:'Write',
+    tagline:'Publish scientific articles', taglineSub:'Share knowledge with the scientific community',
+    chName:'Name your channel', chLink:'Telegram, YouTube, Instagram link...',
+    artTitle:'Article title', artBody:'Write your article...',
+    addImage:'Add image (optional)', publish:'Publish article',
+    published:'Published ✓', feedTitle:'Article feed', feedSub:'All published materials',
+    noArticles:'No articles yet.', back:'Back', toFeed:'Feed',
+    toMyChannel:'My channel', myChannel:'My channel', myArticles:'My articles',
+    settingsTitle:'Channel settings', settingsSub:'Edit name, photo and social links',
+    chNameLabel:'Channel name', socialsLabel:'Social media links', save:'Save',
+    saved:'Saved ✓', photoHint:'Click to change', photoLabel:'Channel photo',
+    likes:'Like', dislikes:'Dislike', views:'Views',
+    comments:'Comments', subscribe:'Subscribe', subscribed:'✓ Subscribed',
+    unsubscribed:'Unsubscribed from', subscribedTo:'Subscribed to',
+    writeComment:'Write a comment...', send:'Send',
+    anonymous:'Anonymous', settingsSaved:'Settings saved!',
+    spamText:'⚠️ This looks like spam or gibberish. Please write a real article.',
+    indecent:'🚫 Contains inappropriate words. Please respect community guidelines.',
+    commentSpam:'⚠️ Comment looks like spam and was not added.',
+    commentIndecent:'🚫 Comment contains inappropriate words and was not added.',
+    readMore:'Read →', articlesOf:'articles', subsLabel:'subs',
+    channelArticles:'Channel articles', editing:'Editing',
+    artPublished:'Article published!', artPublishedBy:'Article by',
+  },
+  fr: {
+    siteTitle:'Статьевед', feed:'Fil', write:'Écrire',
+    tagline:'Publiez des articles scientifiques', taglineSub:'Partagez vos connaissances avec la communauté',
+    chName:'Nommez votre chaîne', chLink:'Lien Telegram, YouTube, Instagram...',
+    artTitle:"Titre de l'article", artBody:'Rédigez votre article...',
+    addImage:'Ajouter une image (facultatif)', publish:"Publier l'article",
+    published:'Publié ✓', feedTitle:"Fil d'articles", feedSub:'Tous les matériaux publiés',
+    noArticles:"Pas encore d'articles.", back:'Retour', toFeed:'Fil',
+    toMyChannel:'Ma chaîne', myChannel:'Ma chaîne', myArticles:'Mes articles',
+    settingsTitle:'Paramètres de la chaîne', settingsSub:'Modifiez nom, photo et réseaux sociaux',
+    chNameLabel:'Nom de la chaîne', socialsLabel:'Liens réseaux sociaux', save:'Enregistrer',
+    saved:'Enregistré ✓', photoHint:'Cliquez pour changer', photoLabel:'Photo de la chaîne',
+    likes:'Aimer', dislikes:'Ne pas aimer', views:'Vues',
+    comments:'Commentaires', subscribe:"S'abonner", subscribed:'✓ Abonné',
+    unsubscribed:'Désabonné de', subscribedTo:'Abonné à',
+    writeComment:'Écrire un commentaire...', send:'Envoyer',
+    anonymous:'Anonyme', settingsSaved:'Paramètres enregistrés!',
+    spamText:'⚠️ Cela ressemble à du spam. Veuillez écrire un vrai article.',
+    indecent:'🚫 Contient des mots inappropriés. Veuillez respecter les règles.',
+    commentSpam:'⚠️ Le commentaire ressemble à du spam.',
+    commentIndecent:'🚫 Le commentaire contient des mots inappropriés.',
+    readMore:'Lire →', articlesOf:'articles', subsLabel:'abon.',
+    channelArticles:'Articles de la chaîne', editing:'Édition',
+    artPublished:'Article publié!', artPublishedBy:'Article de',
+  },
+  de: {
+    siteTitle:'Статьевед', feed:'Feed', write:'Schreiben',
+    tagline:'Wissenschaftliche Artikel veröffentlichen', taglineSub:'Teile Wissen mit der wissenschaftlichen Gemeinschaft',
+    chName:'Benenne deinen Kanal', chLink:'Telegram, YouTube, Instagram Link...',
+    artTitle:'Artikeltitel', artBody:'Schreibe deinen Artikel...',
+    addImage:'Bild hinzufügen (optional)', publish:'Artikel veröffentlichen',
+    published:'Veröffentlicht ✓', feedTitle:'Artikel-Feed', feedSub:'Alle veröffentlichten Materialien',
+    noArticles:'Noch keine Artikel.', back:'Zurück', toFeed:'Feed',
+    toMyChannel:'Mein Kanal', myChannel:'Mein Kanal', myArticles:'Meine Artikel',
+    settingsTitle:'Kanaleinstellungen', settingsSub:'Name, Foto und soziale Links bearbeiten',
+    chNameLabel:'Kanalname', socialsLabel:'Social-Media-Links', save:'Speichern',
+    saved:'Gespeichert ✓', photoHint:'Klicken zum Ändern', photoLabel:'Kanal-Foto',
+    likes:'Gefällt mir', dislikes:'Gefällt mir nicht', views:'Aufrufe',
+    comments:'Kommentare', subscribe:'Abonnieren', subscribed:'✓ Abonniert',
+    unsubscribed:'Abonnement beendet von', subscribedTo:'Abonniert',
+    writeComment:'Kommentar schreiben...', send:'Senden',
+    anonymous:'Anonym', settingsSaved:'Einstellungen gespeichert!',
+    spamText:'⚠️ Das sieht nach Spam aus. Bitte schreibe einen echten Artikel.',
+    indecent:'🚫 Enthält unangemessene Wörter. Bitte respektiere die Richtlinien.',
+    commentSpam:'⚠️ Kommentar sieht nach Spam aus.',
+    commentIndecent:'🚫 Kommentar enthält unangemessene Wörter.',
+    readMore:'Lesen →', articlesOf:'Artikel', subsLabel:'Abo',
+    channelArticles:'Artikel des Kanals', editing:'Bearbeitung',
+    artPublished:'Artikel veröffentlicht!', artPublishedBy:'Artikel von',
+  },
+  it: {
+    siteTitle:'Статьевед', feed:'Feed', write:'Scrivere',
+    tagline:'Pubblica articoli scientifici', taglineSub:'Condividi la conoscenza con la comunità scientifica',
+    chName:'Dai un nome al tuo canale', chLink:'Link Telegram, YouTube, Instagram...',
+    artTitle:"Titolo dell'articolo", artBody:'Scrivi il tuo articolo...',
+    addImage:'Aggiungi immagine (facoltativo)', publish:"Pubblica l'articolo",
+    published:'Pubblicato ✓', feedTitle:'Feed articoli', feedSub:'Tutti i materiali pubblicati',
+    noArticles:'Nessun articolo ancora.', back:'Indietro', toFeed:'Feed',
+    toMyChannel:'Il mio canale', myChannel:'Il mio canale', myArticles:'I miei articoli',
+    settingsTitle:'Impostazioni canale', settingsSub:'Modifica nome, foto e social',
+    chNameLabel:'Nome del canale', socialsLabel:'Link social media', save:'Salva',
+    saved:'Salvato ✓', photoHint:'Clicca per cambiare', photoLabel:'Foto del canale',
+    likes:'Mi piace', dislikes:'Non mi piace', views:'Visualizzazioni',
+    comments:'Commenti', subscribe:'Iscriviti', subscribed:'✓ Iscritto',
+    unsubscribed:'Disiscritto da', subscribedTo:'Iscritto a',
+    writeComment:'Scrivi un commento...', send:'Invia',
+    anonymous:'Anonimo', settingsSaved:'Impostazioni salvate!',
+    spamText:'⚠️ Sembra spam. Per favore scrivi un vero articolo.',
+    indecent:'🚫 Contiene parole inappropriate. Rispetta le linee guida.',
+    commentSpam:'⚠️ Il commento sembra spam.',
+    commentIndecent:'🚫 Il commento contiene parole inappropriate.',
+    readMore:'Leggi →', articlesOf:'articoli', subsLabel:'iscr.',
+    channelArticles:'Articoli del canale', editing:'Modifica',
+    artPublished:'Articolo pubblicato!', artPublishedBy:'Articolo di',
+  },
+  zh: {
+    siteTitle:'Статьевед', feed:'动态', write:'写作',
+    tagline:'发表科学文章', taglineSub:'与科学界分享知识',
+    chName:'为您的频道命名', chLink:'Telegram、YouTube、Instagram 链接...',
+    artTitle:'文章标题', artBody:'写下您的文章...',
+    addImage:'添加图片（可选）', publish:'发布文章',
+    published:'已发布 ✓', feedTitle:'文章动态', feedSub:'所有已发布的内容',
+    noArticles:'暂无文章。', back:'返回', toFeed:'动态',
+    toMyChannel:'我的频道', myChannel:'我的频道', myArticles:'我的文章',
+    settingsTitle:'频道设置', settingsSub:'编辑名称、照片和社交链接',
+    chNameLabel:'频道名称', socialsLabel:'社交媒体链接', save:'保存',
+    saved:'已保存 ✓', photoHint:'点击更改', photoLabel:'频道照片',
+    likes:'喜欢', dislikes:'不喜欢', views:'浏览量',
+    comments:'评论', subscribe:'订阅', subscribed:'✓ 已订阅',
+    unsubscribed:'已取消订阅', subscribedTo:'已订阅',
+    writeComment:'写评论...', send:'发送',
+    anonymous:'匿名', settingsSaved:'设置已保存！',
+    spamText:'⚠️ 这看起来像垃圾邮件。请写一篇真正的文章。',
+    indecent:'🚫 包含不当词语。请遵守社区准则。',
+    commentSpam:'⚠️ 评论看起来像垃圾邮件。',
+    commentIndecent:'🚫 评论包含不当词语。',
+    readMore:'阅读 →', articlesOf:'篇文章', subsLabel:'订阅',
+    channelArticles:'频道文章', editing:'编辑中',
+    artPublished:'文章已发布！', artPublishedBy:'文章来自',
+  },
+  ar: {
+    siteTitle:'Статьевед', feed:'خلاصة', write:'كتابة',
+    tagline:'انشر مقالات علمية', taglineSub:'شارك المعرفة مع المجتمع العلمي',
+    chName:'سمّ قناتك', chLink:'رابط تيليجرام، يوتيوب، إنستغرام...',
+    artTitle:'عنوان المقال', artBody:'اكتب مقالك...',
+    addImage:'إضافة صورة (اختياري)', publish:'نشر المقال',
+    published:'تم النشر ✓', feedTitle:'خلاصة المقالات', feedSub:'جميع المواد المنشورة',
+    noArticles:'لا توجد مقالات بعد.', back:'رجوع', toFeed:'خلاصة',
+    toMyChannel:'قناتي', myChannel:'قناتي', myArticles:'مقالاتي',
+    settingsTitle:'إعدادات القناة', settingsSub:'تعديل الاسم والصورة والروابط الاجتماعية',
+    chNameLabel:'اسم القناة', socialsLabel:'روابط التواصل الاجتماعي', save:'حفظ',
+    saved:'تم الحفظ ✓', photoHint:'انقر للتغيير', photoLabel:'صورة القناة',
+    likes:'إعجاب', dislikes:'عدم إعجاب', views:'مشاهدات',
+    comments:'تعليقات', subscribe:'اشتراك', subscribed:'✓ مشترك',
+    unsubscribed:'إلغاء الاشتراك من', subscribedTo:'اشتركت في',
+    writeComment:'اكتب تعليقاً...', send:'إرسال',
+    anonymous:'مجهول', settingsSaved:'تم حفظ الإعدادات!',
+    spamText:'⚠️ يبدو هذا بريداً عشوائياً. يرجى كتابة مقال حقيقي.',
+    indecent:'🚫 يحتوي على كلمات غير لائقة. يرجى احترام القواعد.',
+    commentSpam:'⚠️ التعليق يبدو بريداً عشوائياً.',
+    commentIndecent:'🚫 التعليق يحتوي على كلمات غير لائقة.',
+    readMore:'قراءة →', articlesOf:'مقالات', subsLabel:'مشترك',
+    channelArticles:'مقالات القناة', editing:'تحرير',
+    artPublished:'تم نشر المقال!', artPublishedBy:'مقال من',
+  },
+  uk: {
+    siteTitle:'Статьевед', feed:'Стрічка', write:'Написати',
+    tagline:'Публікуйте наукові статті', taglineSub:'Діліться знаннями з науковою спільнотою',
+    chName:'Назвіть свій канал', chLink:'Посилання Telegram, YouTube, Instagram...',
+    artTitle:'Назва статті', artBody:'Напишіть свою статтю...',
+    addImage:'Додати зображення (необов\'язково)', publish:'Опублікувати статтю',
+    published:'Опубліковано ✓', feedTitle:'Стрічка статей', feedSub:'Всі опубліковані матеріали',
+    noArticles:'Поки немає жодної статті.', back:'Назад', toFeed:'Стрічка',
+    toMyChannel:'Мій канал', myChannel:'Мій канал', myArticles:'Мої статті',
+    settingsTitle:'Налаштування каналу', settingsSub:'Редагуй ім\'я, фото та соцмережі',
+    chNameLabel:'Назва каналу', socialsLabel:'Посилання на соцмережі', save:'Зберегти',
+    saved:'Збережено ✓', photoHint:'Натисни для зміни', photoLabel:'Фото каналу',
+    likes:'Подобається', dislikes:'Не подобається', views:'Перегляди',
+    comments:'Коментарі', subscribe:'Підписатися', subscribed:'✓ Підписаний',
+    unsubscribed:'Відписались від', subscribedTo:'Підписались на',
+    writeComment:'Напишіть коментар...', send:'Надіслати',
+    anonymous:'Анонім', settingsSaved:'Налаштування збережено!',
+    spamText:'⚠️ Схоже на спам. Будь ласка, напишіть справжню статтю.',
+    indecent:'🚫 Містить неприпустимі слова. Дотримуйтесь правил спілкування.',
+    commentSpam:'⚠️ Коментар схожий на спам і не був доданий.',
+    commentIndecent:'🚫 Коментар містить неприпустимі слова і не був доданий.',
+    readMore:'Читати →', articlesOf:'статей', subsLabel:'підп.',
+    channelArticles:'Статті каналу', editing:'Редагування',
+    artPublished:'Статтю опубліковано!', artPublishedBy:'Стаття від',
+  }
+};
+
+// Detect language from browser
+function detectLang(){
+  const nav = navigator.language || navigator.userLanguage || 'ru';
+  const code = nav.slice(0,2).toLowerCase();
+  return LANGS[code] ? code : 'ru';
+}
+
+let currentLang = detectLang();
+let T = LANGS[currentLang];
+
+function applyTranslations(){
+  T = LANGS[currentLang];
+  document.title = T.siteTitle + ' — ' + T.tagline;
+  // Header
+  document.querySelector('.logo span') && (document.querySelector('.logo span').textContent = T.siteTitle);
+  document.getElementById('nav-feed').textContent = T.feed;
+  document.getElementById('nav-editor').textContent = T.write;
+  // Editor
+  document.querySelector('.editor-tagline h1').textContent = T.tagline;
+  document.querySelector('.editor-tagline p').textContent = T.taglineSub;
+  document.getElementById('chName').placeholder = T.chName;
+  document.getElementById('chLink').placeholder = T.chLink;
+  document.getElementById('artTitle').placeholder = T.artTitle;
+  document.getElementById('artText').placeholder = T.artBody;
+  document.querySelector('.upl-lbl').textContent = T.addImage;
+  document.getElementById('pubBtn').textContent = T.publish;
+  // Feed
+  document.querySelector('.feed-hdr h2').textContent = T.feedTitle;
+  document.querySelector('.feed-hdr p').textContent = T.feedSub;
+  // Settings
+  document.querySelector('.settings-page h2').textContent = T.settingsTitle;
+  document.querySelector('.settings-page .sub').textContent = T.settingsSub;
+  document.querySelector('.s-av-hint strong').textContent = T.photoLabel;
+  document.querySelector('.s-av-hint').childNodes[1] && (document.querySelector('.s-av-hint').lastChild.textContent = T.photoHint);
+  document.getElementById('saveBtn').textContent = T.save;
+  // My channel labels
+  document.querySelector('.my-ch-page .sec-label') && (document.querySelector('.my-ch-page .sec-label').textContent = T.myArticles);
+  renderFeed();
+}
+
+// Language switcher UI
+function buildLangSwitcher(){
+  const flags = {ru:'🇷🇺',pt:'🇵🇹',es:'🇪🇸',en:'🇬🇧',fr:'🇫🇷',de:'🇩🇪',it:'🇮🇹',zh:'🇨🇳',ar:'🇸🇦',uk:'🇺🇦'};
+  const wrap = document.createElement('div');
+  wrap.id = 'langSwitcher';
+  wrap.style.cssText = 'position:fixed;bottom:18px;right:18px;z-index:200;display:flex;flex-direction:column;align-items:flex-end;gap:6px';
+
+  const btn = document.createElement('button');
+  btn.style.cssText = 'width:38px;height:38px;border-radius:50%;border:1.5px solid #e0e0e8;background:#fff;font-size:1.2rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;transition:transform .18s';
+  btn.title = 'Change language';
+  btn.innerHTML = flags[currentLang] || '🌐';
+  btn.onclick = () => menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
+
+  const menu = document.createElement('div');
+  menu.style.cssText = 'display:none;flex-direction:column;gap:4px;background:#fff;border:1.5px solid #e0e0e8;border-radius:12px;padding:8px;box-shadow:0 4px 20px rgba(0,0,0,.12)';
+
+  Object.entries(flags).forEach(([code, flag]) => {
+    const item = document.createElement('button');
+    item.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 10px;border:none;background:transparent;border-radius:8px;cursor:pointer;font-size:.82rem;font-family:inherit;color:#1a1a2e;transition:background .15s;text-align:left';
+    item.innerHTML = `<span style="font-size:1.1rem">${flag}</span> ${LANGS[code].feed !== LANGS['ru'].feed ? LANGS[code].siteTitle : ''}`;
+    const names = {ru:'Русский',pt:'Português',es:'Español',en:'English',fr:'Français',de:'Deutsch',it:'Italiano',zh:'中文',ar:'العربية',uk:'Українська'};
+    item.innerHTML = `<span style="font-size:1.1rem">${flag}</span> ${names[code]}`;
+    item.onmouseover = () => item.style.background = '#ede9fe';
+    item.onmouseout  = () => item.style.background = 'transparent';
+    item.onclick = () => {
+      currentLang = code;
+      btn.innerHTML = flag;
+      menu.style.display = 'none';
+      applyTranslations();
+      try{ localStorage.setItem('sv_lang', code); }catch(e){}
+    };
+    menu.appendChild(item);
+  });
+
+  wrap.appendChild(menu);
+  wrap.appendChild(btn);
+  document.body.appendChild(wrap);
+}
+
+// ═══════════════════════════════════════════════════
 //  HELPERS
 // ═══════════════════════════════════════════════════
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
@@ -574,9 +909,7 @@ document.getElementById('pubBtn').addEventListener('click',()=>{
   // Spam check
   const spamResult = isSpam(text);
   if(spamResult){
-    banner.textContent = spamResult === 'indecent'
-      ? '🚫 Статья содержит недопустимые слова и не может быть опубликована. Пожалуйста, соблюдайте культуру общения.'
-      : '⚠️ Похоже, это спам или бессмысленный текст. Пожалуйста, напишите настоящую статью.';
+    banner.textContent = spamResult === 'indecent' ? T.indecent : T.spamText;
     banner.classList.add('show');
     setTimeout(()=>banner.classList.remove('show'),4500);
     return;
@@ -608,10 +941,10 @@ document.getElementById('pubBtn').addEventListener('click',()=>{
   save();
 
   const btn=document.getElementById('pubBtn');
-  btn.textContent='Опубликовано ✓';
+  btn.textContent=T.published;
   btn.style.background='linear-gradient(135deg,#059669,#34d399)';
-  setTimeout(()=>{btn.textContent='Опубликовать статью';btn.style.background=''},2600);
-  toast(chName?`Статья от «${chName}» опубликована!`:'Статья опубликована!');
+  setTimeout(()=>{btn.textContent=T.publish;btn.style.background=''},2600);
+  toast(chName?`${T.artPublishedBy} «${chName}»!`:T.artPublished);
 
   document.getElementById('artTitle').value='';
   atx.value='';
@@ -640,7 +973,7 @@ function statsHtml(a){
 function renderFeed(data=null,containerId='feedList',showDel=false){
   const cont=document.getElementById(containerId);
   const list=data!==null?data:articles;
-  if(!list.length){cont.innerHTML=`<div class="empty"><div class="ei">📄</div><p>Пока нет ни одной статьи.</p></div>`;return}
+  if(!list.length){cont.innerHTML=`<div class="empty"><div class="ei">📄</div><p>${T.noArticles}</p></div>`;return}
   cont.innerHTML=list.map(a=>`
     <div class="card" id="card-${a.id}" onclick="openArticle(${a.id})">
       ${showDel?`<button class="del-btn" onclick="event.stopPropagation();delArticle(${a.id})" title="Удалить">✕</button>`:''}
@@ -652,6 +985,7 @@ function renderFeed(data=null,containerId='feedList',showDel=false){
         <div class="c-title">${esc(a.title)}</div>
         <div class="c-excerpt">${esc(a.text)}</div>
         ${statsHtml(a)}
+        <div style="margin-top:8px"><button class="read-btn" onclick="event.stopPropagation();openArticle(${a.id})">${T.readMore}</button></div>
       </div>
       ${a.imageUrl
         ?`<div class="c-img"><img src="${a.imageUrl}" alt=""/></div>`
@@ -703,27 +1037,27 @@ function renderSidebar(a){
     <div class="sb-btn sb-like${a.userLiked?' active-like':''}" onclick="doLike(${a.id})">
       <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
       <span class="sb-count">${fmtNum(a.likes)}</span>
-      <span class="sb-label">Нравится</span>
+      <span class="sb-label">${T.likes}</span>
     </div>
     <div class="sb-btn sb-dislike${a.userDisliked?' active-dislike':''}" onclick="doDislike(${a.id})">
       <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
       <span class="sb-count">${fmtNum(a.dislikes)}</span>
-      <span class="sb-label">Не нравится</span>
+      <span class="sb-label">${T.dislikes}</span>
     </div>
     <div class="sb-btn sb-views">
       <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
       <span class="sb-count">${fmtNum(a.views)}</span>
-      <span class="sb-label">Просмотры</span>
+      <span class="sb-label">${T.views}</span>
     </div>
     <div class="sb-btn sb-comments">
       <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       <span class="sb-count">${fmtNum(a.comments.length)}</span>
-      <span class="sb-label">Комментарии</span>
+      <span class="sb-label">${T.comments}</span>
     </div>
     <div class="sb-btn sb-sub${isSubbed?' active-sub':''}" onclick="doSub('${esc(a.channelName)}',${a.id})">
       <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
       <span class="sb-count">${isSubbed?'✓':'+1'}</span>
-      <span class="sb-label">${isSubbed?'Подписан':'Подписаться'}</span>
+      <span class="sb-label">${isSubbed?T.subscribed:T.subscribe}</span>
     </div>
   `;
 }
@@ -741,8 +1075,8 @@ function doDislike(id){
   renderSidebar(a);renderFeed();renderMyChannel();save();
 }
 function doSub(channelName,articleId){
-  if(subs.has(channelName)){subs.delete(channelName);toast(`Вы отписались от «${channelName}»`)}
-  else{subs.add(channelName);toast(`Вы подписались на «${channelName}»!`)}
+  if(subs.has(channelName)){subs.delete(channelName);toast(`${T.unsubscribed} «${channelName}»`)}
+  else{subs.add(channelName);toast(`${T.subscribedTo} «${channelName}»!`)}
   const a=articles.find(x=>x.id===articleId);
   if(a) renderSidebar(a);
   save();
@@ -754,17 +1088,17 @@ function doSub(channelName,articleId){
 function renderComments(a){
   const sec=document.getElementById('commentsSection');
   sec.innerHTML=`
-    <div class="comments-title">Комментарии (${a.comments.length})</div>
+    <div class="comments-title">${T.comments} (${a.comments.length})</div>
     <div class="comment-input-row">
-      <textarea class="comment-box" id="cmBox" placeholder="Напишите комментарий..." rows="2"></textarea>
-      <button class="comment-send" onclick="sendComment(${a.id})">Отправить</button>
+      <textarea class="comment-box" id="cmBox" placeholder="${T.writeComment}" rows="2"></textarea>
+      <button class="comment-send" onclick="sendComment(${a.id})">${T.send}</button>
     </div>
     <div id="cmList">
       ${a.comments.map(c=>`
         <div class="comment-item">
           <div class="cm-avatar">${c.avatarUrl?`<img src="${c.avatarUrl}" alt=""/>`:esc((c.author||'?').charAt(0).toUpperCase())}</div>
           <div class="cm-body">
-            <div class="cm-author">${esc(c.author||'Аноним')}</div>
+            <div class="cm-author">${esc(c.author||T.anonymous)}</div>
             <div class="cm-text">${esc(c.text)}</div>
             <div class="cm-date">${c.date}</div>
           </div>
@@ -776,15 +1110,10 @@ function sendComment(id){
   const box=document.getElementById('cmBox');
   const text=box.value.trim(); if(!text) return;
   const cmSpam = isSpam(text);
-  if(cmSpam){
-    toast(cmSpam === 'indecent'
-      ? '🚫 Комментарий содержит недопустимые слова и не был добавлен.'
-      : '⚠️ Комментарий похож на спам и не был добавлен.');
-    return;
-  }
+  if(cmSpam){ toast(cmSpam==='indecent'?T.commentIndecent:T.commentSpam); return; }
   const a=articles.find(x=>x.id===id); if(!a) return;
   a.comments.push({
-    author:profile.name||'Аноним',
+    author:profile.name||T.anonymous,
     avatarUrl:profile.avatarUrl,
     text,
     date:new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})
@@ -856,7 +1185,7 @@ function openChPage(channelName){
         ${statsHtmlChannel(st,subCount)}
       </div>
       <button class="save-btn" style="position:absolute;top:14px;right:14px;padding:7px 16px;font-size:.8rem" onclick="doSub('${esc(channelName)}',0)">
-        ${isSubbed?'✓ Подписан':'Подписаться'}
+        ${isSubbed?T.subscribed:T.subscribe}
       </button>
     </div>
     <div class="sec-label">${plural(list.length,'статья','статьи','статей')} канала</div>
@@ -890,10 +1219,10 @@ document.getElementById('saveBtn').addEventListener('click',()=>{
   ['tg','yt','ig','tk','fb','vk'].forEach(k=>profile.links[k]=document.getElementById('l-'+k).value.trim());
   document.getElementById('chName').value=name;
   updateHdrAvatar(); hideSetup(); save();
-  toast('Настройки сохранены!');
+  toast(T.settingsSaved);
   const btn=document.getElementById('saveBtn');
-  btn.textContent='Сохранено ✓'; btn.style.background='linear-gradient(135deg,#059669,#34d399)';
-  setTimeout(()=>{btn.textContent='Сохранить';btn.style.background=''},2400);
+  btn.textContent=T.saved; btn.style.background='linear-gradient(135deg,#059669,#34d399)';
+  setTimeout(()=>{btn.textContent=T.save;btn.style.background=''},2400);
   setTimeout(()=>showPage('my-channel'),600);
 });
 
@@ -901,6 +1230,10 @@ document.getElementById('saveBtn').addEventListener('click',()=>{
 //  INIT
 // ═══════════════════════════════════════════════════
 load();
+// Restore saved language
+try{ const sl=localStorage.getItem('sv_lang'); if(sl&&LANGS[sl]){currentLang=sl;T=LANGS[sl];} }catch(e){}
+applyTranslations();
+buildLangSwitcher();
 updateHdrAvatar();
 hideSetup();
 renderFeed();
