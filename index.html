@@ -266,8 +266,8 @@
     </div>
   </div>
   <nav>
-    <button class="nav-btn" id="nav-feed" onclick="showPage('feed')">Лента</button>
-    <button class="nav-btn active" id="nav-editor" onclick="showPage('editor')">Написать</button>
+    <button class="nav-btn" id="nav-feed" onclick="showPage('feed')" data-i18n="feed">Лента</button>
+    <button class="nav-btn active" id="nav-editor" onclick="showPage('editor')" data-i18n="write">Написать</button>
   </nav>
 </header>
 
@@ -275,38 +275,38 @@
 <div class="page active" id="page-editor">
   <div class="editor-page">
     <div class="editor-tagline">
-      <h1>Публикуйте научные статьи</h1>
-      <p>Делитесь знаниями с научным сообществом</p>
+      <h1 data-i18n="tagline">Публикуйте научные статьи</h1>
+      <p data-i18n="taglineSub">Делитесь знаниями с научным сообществом</p>
     </div>
     <div class="channel-setup" id="channelSetup">
       <div class="av-upload" id="avUpload" title="Фото канала">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         <input type="file" accept="image/*" id="avInput"/>
       </div>
-      <input class="ifield" type="text" id="chName" placeholder="Назовите свой канал" autocomplete="off" spellcheck="false"/>
-      <input class="ifield wide" type="text" id="chLink" placeholder="Ссылка на Telegram, YouTube, Instagram..." autocomplete="off" spellcheck="false"/>
+      <input class="ifield" type="text" id="chName" data-i18n-ph="chName" placeholder="Назовите свой канал" autocomplete="off" spellcheck="false"/>
+      <input class="ifield wide" type="text" id="chLink" data-i18n-ph="chLink" placeholder="Ссылка на Telegram, YouTube, Instagram..." autocomplete="off" spellcheck="false"/>
     </div>
-    <div class="spam-banner" id="spamBanner">⚠️ Похоже, это спам или бессмысленный текст. Статья не была опубликована. Пожалуйста, напишите настоящую статью.</div>
-    <input class="title-inp" type="text" id="artTitle" placeholder="Название статьи" autocomplete="off" spellcheck="false"/>
+    <div class="spam-banner" id="spamBanner"></div>
+    <input class="title-inp" type="text" id="artTitle" data-i18n-ph="artTitle" placeholder="Название статьи" autocomplete="off" spellcheck="false"/>
     <div class="tw">
-      <textarea class="atx" id="artText" placeholder="Напишите свою статью..." spellcheck="true"></textarea>
-      <div class="ch" id="cursorHint"><span class="cb"></span><span>Редактирование</span></div>
+      <textarea class="atx" id="artText" data-i18n-ph="artBody" placeholder="Напишите свою статью..." spellcheck="true"></textarea>
+      <div class="ch" id="cursorHint"><span class="cb"></span><span data-i18n="editing">Редактирование</span></div>
     </div>
     <div class="upl-area">
-      <span class="upl-lbl">Добавить изображение (необязательно)</span>
+      <span class="upl-lbl" data-i18n="addImage">Добавить изображение (необязательно)</span>
       <div class="upl-box" id="uplBox">
         <div class="plus"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         <input type="file" accept="image/*" id="imgInput"/>
       </div>
     </div>
-    <button class="pub-btn" id="pubBtn">Опубликовать статью</button>
+    <button class="pub-btn" id="pubBtn" data-i18n="publish">Опубликовать статью</button>
   </div>
 </div>
 
 <!-- FEED -->
 <div class="page" id="page-feed">
   <div class="feed-page">
-    <div class="feed-hdr"><h2>Лента статей</h2><p>Все опубликованные материалы</p></div>
+    <div class="feed-hdr"><h2 data-i18n="feedTitle">Лента статей</h2><p data-i18n="feedSub">Все опубликованные материалы</p></div>
     <div id="feedList"></div>
   </div>
 </div>
@@ -316,7 +316,7 @@
   <div class="article-wrap">
     <div class="article-main">
       <div class="back-btn" onclick="goBack()">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Назад
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="back">Назад</span>
       </div>
       <div id="artContent"></div>
       <div class="comments-section" id="commentsSection"></div>
@@ -329,7 +329,7 @@
 <div class="page" id="page-my-channel">
   <div class="my-ch-page">
     <div class="back-btn" onclick="showPage('feed')">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Лента
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="toFeed">Лента</span>
     </div>
     <div class="ch-hero">
       <div class="ch-av-big" id="myAvBig"></div>
@@ -342,7 +342,7 @@
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </div>
-    <div class="sec-label">Мои статьи</div>
+    <div class="sec-label" data-i18n="myArticles">Мои статьи</div>
     <div id="myArtList"></div>
   </div>
 </div>
@@ -351,7 +351,7 @@
 <div class="page" id="page-channel">
   <div class="ch-page">
     <div class="back-btn" onclick="showPage('feed')">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Лента
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="toFeed">Лента</span>
     </div>
     <div id="chViewContent"></div>
   </div>
@@ -361,21 +361,21 @@
 <div class="page" id="page-settings">
   <div class="settings-page">
     <div class="back-btn" onclick="showPage('my-channel')">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Мой канал
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="toMyChannel">Мой канал</span>
     </div>
-    <h2>Настройки канала</h2>
-    <p class="sub">Измени имя, фото и ссылки на соцсети</p>
+    <h2 data-i18n="settingsTitle">Настройки канала</h2>
+    <p class="sub" data-i18n="settingsSub">Измени имя, фото и ссылки на соцсети</p>
     <div class="s-card">
       <div class="s-av-row">
         <div class="s-av-box" id="sAvBox">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
           <input type="file" accept="image/*" id="sAvInput"/>
         </div>
-        <div class="s-av-hint"><strong>Фото канала</strong>Нажми, чтобы изменить</div>
+        <div class="s-av-hint"><strong data-i18n="photoLabel">Фото канала</strong><span data-i18n="photoHint">Нажми, чтобы изменить</span></div>
       </div>
-      <div><div class="s-lbl">Название канала</div><input class="s-inp" type="text" id="sName" placeholder="Название канала" autocomplete="off"/></div>
+      <div><div class="s-lbl" data-i18n="chNameLabel">Название канала</div><input class="s-inp" type="text" id="sName" data-i18n-ph="chNameLabel" placeholder="Название канала" autocomplete="off"/></div>
       <div>
-        <div class="s-lbl">Ссылки на соцсети</div>
+        <div class="s-lbl" data-i18n="socialsLabel">Ссылки на соцсети</div>
         <div class="socials">
           <div class="s-row"><div class="s-icon si-tg"><svg viewBox="0 0 24 24"><path d="M21.4 3.2L2.3 10.8c-1.3.5-1.3 1.3-.2 1.6l4.8 1.5 1.9 5.7c.3.7.2 1 .9 1 .5 0 .8-.2 1.1-.5l2.6-2.5 5.1 3.8c.9.5 1.6.3 1.8-.9l3.3-15.4c.3-1.4-.5-2-1.2-1.9z"/></svg></div><input class="s-link" type="url" id="l-tg" placeholder="Telegram"/></div>
           <div class="s-row"><div class="s-icon si-yt"><svg viewBox="0 0 24 24"><path d="M22.5 6.5s-.25-1.7-1-2.45c-.97-1-2.05-1.02-2.55-1.08C16.2 2.8 12 2.8 12 2.8s-4.2 0-6.95.17c-.5.06-1.58.08-2.55 1.08C1.75 4.8 1.5 6.5 1.5 6.5S1.25 8.48 1.25 10.45v1.87c0 1.97.25 3.95.25 3.95s.25 1.7 1 2.45c.97 1 2.24.97 2.8 1.08C7 20 12 20 12 20s4.2 0 6.95-.2c.5-.06 1.58-.08 2.55-1.08.75-.75 1-2.45 1-2.45s.25-1.98.25-3.95v-1.87c0-1.97-.25-3.95-.25-3.95zM9.75 14.85V8.7l6.5 3.08-6.5 3.07z"/></svg></div><input class="s-link" type="url" id="l-yt" placeholder="YouTube"/></div>
@@ -385,12 +385,12 @@
           <div class="s-row"><div class="s-icon si-vk"><svg viewBox="0 0 24 24"><path d="M21.6 7.2c.1-.4 0-.7-.6-.7h-2c-.5 0-.7.3-.9.6 0 0-1 2.5-2.5 4.1-.5.5-.7.6-1 .6-.1 0-.3-.1-.3-.5V7.2c0-.5-.2-.7-.6-.7H11c-.3 0-.5.2-.5.5 0 .5.7.6.8 2v3c0 .6-.1.7-.4.7-.7 0-2.5-2.6-3.5-5.6-.2-.5-.4-.7-1-.7H4.4c-.6 0-.7.3-.7.6 0 .6.7 3.4 3.2 7.2 1.7 2.5 4 3.7 6.2 3.7 1.3 0 1.5-.3 1.5-.7v-1.7c0-.6.1-.7.5-.7.3 0 .8.2 2 1.3 1.4 1.3 1.6 1.8 2.3 1.8h2c.6 0 .9-.3.7-.8-.2-.6-.9-1.4-1.8-2.4-.5-.6-1.2-1.2-1.4-1.5-.3-.4-.2-.5 0-.9 0 0 2.4-3.4 2.7-4.5z"/></svg></div><input class="s-link" type="url" id="l-vk" placeholder="ВКонтакте"/></div>
         </div>
       </div>
-      <button class="save-btn" id="saveBtn">Сохранить</button>
+      <button class="save-btn" id="saveBtn" data-i18n="save">Сохранить</button>
     </div>
   </div>
 </div>
 
-<footer>© 2026 Статьевед — платформа для научных публикаций</footer>
+<footer data-i18n="footer">© 2026 Статьевед — платформа для научных публикаций</footer>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -422,6 +422,8 @@ const LANGS = {
     readMore:'Читать →', articlesOf:'статей', subsLabel:'подп.',
     channelArticles:'Статьи канала', editing:'Редактирование',
     artPublished:'Статья опубликована!', artPublishedBy:'Статья от',
+    footer:'© 2026 Статьевед — платформа для научных публикаций',
+    translating:'🌐 Перевожу...', translatedAuto:'🌐 Переведено автоматически', showOriginal:'Показать оригинал', translateBtn:'🌐 Перевести',
   },
   pt: {
     siteTitle:'Статьевед', feed:'Feed', write:'Escrever',
@@ -447,6 +449,8 @@ const LANGS = {
     readMore:'Ler →', articlesOf:'artigos', subsLabel:'seg.',
     channelArticles:'Artigos do canal', editing:'A editar',
     artPublished:'Artigo publicado!', artPublishedBy:'Artigo de',
+    footer:'© 2026 Статьевед — plataforma de publicações científicas',
+    translating:'🌐 A traduzir...', translatedAuto:'🌐 Traduzido automaticamente', showOriginal:'Mostrar original', translateBtn:'🌐 Traduzir',
   },
   es: {
     siteTitle:'Статьевед', feed:'Feed', write:'Escribir',
@@ -472,6 +476,8 @@ const LANGS = {
     readMore:'Leer →', articlesOf:'artículos', subsLabel:'sus.',
     channelArticles:'Artículos del canal', editing:'Editando',
     artPublished:'¡Artículo publicado!', artPublishedBy:'Artículo de',
+    footer:'© 2026 Статьевед — plataforma de artículos científicos',
+    translating:'🌐 Traduciendo...', translatedAuto:'🌐 Traducido automáticamente', showOriginal:'Mostrar original', translateBtn:'🌐 Traducir',
   },
   en: {
     siteTitle:'Статьевед', feed:'Feed', write:'Write',
@@ -497,6 +503,8 @@ const LANGS = {
     readMore:'Read →', articlesOf:'articles', subsLabel:'subs',
     channelArticles:'Channel articles', editing:'Editing',
     artPublished:'Article published!', artPublishedBy:'Article by',
+    footer:'© 2026 Статьевед — scientific articles platform',
+    translating:'🌐 Translating...', translatedAuto:'🌐 Auto-translated', showOriginal:'Show original', translateBtn:'🌐 Translate',
   },
   fr: {
     siteTitle:'Статьевед', feed:'Fil', write:'Écrire',
@@ -522,6 +530,8 @@ const LANGS = {
     readMore:'Lire →', articlesOf:'articles', subsLabel:'abon.',
     channelArticles:'Articles de la chaîne', editing:'Édition',
     artPublished:'Article publié!', artPublishedBy:'Article de',
+    footer:'© 2026 Статьевед — plateforme d'articles scientifiques',
+    translating:'🌐 Traduction...', translatedAuto:'🌐 Traduit automatiquement', showOriginal:'Voir original', translateBtn:'🌐 Traduire',
   },
   de: {
     siteTitle:'Статьевед', feed:'Feed', write:'Schreiben',
@@ -547,6 +557,8 @@ const LANGS = {
     readMore:'Lesen →', articlesOf:'Artikel', subsLabel:'Abo',
     channelArticles:'Artikel des Kanals', editing:'Bearbeitung',
     artPublished:'Artikel veröffentlicht!', artPublishedBy:'Artikel von',
+    footer:'© 2026 Статьевед — Plattform für wissenschaftliche Artikel',
+    translating:'🌐 Übersetze...', translatedAuto:'🌐 Automatisch übersetzt', showOriginal:'Original anzeigen', translateBtn:'🌐 Übersetzen',
   },
   it: {
     siteTitle:'Статьевед', feed:'Feed', write:'Scrivere',
@@ -572,6 +584,8 @@ const LANGS = {
     readMore:'Leggi →', articlesOf:'articoli', subsLabel:'iscr.',
     channelArticles:'Articoli del canale', editing:'Modifica',
     artPublished:'Articolo pubblicato!', artPublishedBy:'Articolo di',
+    footer:'© 2026 Статьевед — piattaforma di articoli scientifici',
+    translating:'🌐 Traduzione...', translatedAuto:'🌐 Tradotto automaticamente', showOriginal:'Mostra originale', translateBtn:'🌐 Traduci',
   },
   zh: {
     siteTitle:'Статьевед', feed:'动态', write:'写作',
@@ -597,6 +611,8 @@ const LANGS = {
     readMore:'阅读 →', articlesOf:'篇文章', subsLabel:'订阅',
     channelArticles:'频道文章', editing:'编辑中',
     artPublished:'文章已发布！', artPublishedBy:'文章来自',
+    footer:'© 2026 Статьевед — 科学文章平台',
+    translating:'🌐 翻译中...', translatedAuto:'🌐 已自动翻译', showOriginal:'显示原文', translateBtn:'🌐 翻译',
   },
   ar: {
     siteTitle:'Статьевед', feed:'خلاصة', write:'كتابة',
@@ -622,6 +638,8 @@ const LANGS = {
     readMore:'قراءة →', articlesOf:'مقالات', subsLabel:'مشترك',
     channelArticles:'مقالات القناة', editing:'تحرير',
     artPublished:'تم نشر المقال!', artPublishedBy:'مقال من',
+    footer:'© 2026 Статьевед — منصة المقالات العلمية',
+    translating:'🌐 جارٍ الترجمة...', translatedAuto:'🌐 تمت الترجمة تلقائياً', showOriginal:'عرض الأصلي', translateBtn:'🌐 ترجمة',
   },
   uk: {
     siteTitle:'Статьевед', feed:'Стрічка', write:'Написати',
@@ -647,6 +665,8 @@ const LANGS = {
     readMore:'Читати →', articlesOf:'статей', subsLabel:'підп.',
     channelArticles:'Статті каналу', editing:'Редагування',
     artPublished:'Статтю опубліковано!', artPublishedBy:'Стаття від',
+    footer:'© 2026 Статьевед — платформа наукових публікацій',
+    translating:'🌐 Перекладаю...', translatedAuto:'🌐 Перекладено автоматично', showOriginal:'Показати оригінал', translateBtn:'🌐 Перекласти',
   }
 };
 
@@ -663,31 +683,27 @@ let T = LANGS[currentLang];
 function applyTranslations(){
   T = LANGS[currentLang];
   document.title = T.siteTitle + ' — ' + T.tagline;
-  // Header
-  document.querySelector('.logo span') && (document.querySelector('.logo span').textContent = T.siteTitle);
-  document.getElementById('nav-feed').textContent = T.feed;
-  document.getElementById('nav-editor').textContent = T.write;
-  // Editor
-  document.querySelector('.editor-tagline h1').textContent = T.tagline;
-  document.querySelector('.editor-tagline p').textContent = T.taglineSub;
-  document.getElementById('chName').placeholder = T.chName;
-  document.getElementById('chLink').placeholder = T.chLink;
-  document.getElementById('artTitle').placeholder = T.artTitle;
-  document.getElementById('artText').placeholder = T.artBody;
-  document.querySelector('.upl-lbl').textContent = T.addImage;
-  document.getElementById('pubBtn').textContent = T.publish;
-  // Feed
-  document.querySelector('.feed-hdr h2').textContent = T.feedTitle;
-  document.querySelector('.feed-hdr p').textContent = T.feedSub;
-  // Settings
-  document.querySelector('.settings-page h2').textContent = T.settingsTitle;
-  document.querySelector('.settings-page .sub').textContent = T.settingsSub;
-  document.querySelector('.s-av-hint strong').textContent = T.photoLabel;
-  document.querySelector('.s-av-hint').childNodes[1] && (document.querySelector('.s-av-hint').lastChild.textContent = T.photoHint);
-  document.getElementById('saveBtn').textContent = T.save;
-  // My channel labels
-  document.querySelector('.my-ch-page .sec-label') && (document.querySelector('.my-ch-page .sec-label').textContent = T.myArticles);
+
+  // Apply all data-i18n text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(T[key] !== undefined) el.textContent = T[key];
+  });
+
+  // Apply all data-i18n-ph placeholder
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if(T[key] !== undefined) el.placeholder = T[key];
+  });
+
+  // Re-render dynamic sections
   renderFeed();
+  const activePage = document.querySelector('.page.active');
+  if(activePage){
+    const name = activePage.id.replace('page-','');
+    if(name === 'my-channel') renderMyChannel();
+    if(name === 'article' && currentArticleId) openArticle(currentArticleId, true);
+  }
 }
 
 // Language switcher UI
@@ -1019,34 +1035,49 @@ function renderArticleContent(a, titleText, bodyText){
 }
 
 async function googleTranslate(text, targetLang){
-  if(!text || targetLang === 'ru' || targetLang === currentLang) return null;
-  // Only translate if target lang differs from 'ru' (articles are written in ru by default)
+  if(!text || !text.trim()) return null;
+  if(targetLang === 'ru') return null; // articles written in Russian
   try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    // MyMemory free API — works in browser, no CORS issues
+    const langMap = {pt:'pt',es:'es',en:'en',fr:'fr',de:'de',it:'it',zh:'zh',ar:'ar',uk:'uk'};
+    const tl = langMap[targetLang] || 'en';
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,500))}&langpair=ru|${tl}`;
     const res = await fetch(url);
     const data = await res.json();
-    return data[0].map(s=>s[0]).join('');
+    if(data.responseStatus === 200 && data.responseData){
+      return data.responseData.translatedText;
+    }
+    return null;
   } catch(e){ return null; }
 }
 
-function buildTranslateBar(a, isTranslated, onTranslate, onOriginal){
-  const bar = document.getElementById('translateBar');
-  if(!bar) return;
-  if(isTranslated){
-    bar.innerHTML=`<span style="font-size:.78rem;color:var(--muted)">🌐 Переведено автоматически</span>
-      <button onclick="(${onOriginal})()" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border);border-radius:50px;background:var(--surface);cursor:pointer;font-family:inherit;color:var(--accent)">Показать оригинал</button>`;
-  } else {
-    bar.innerHTML=`<button onclick="(${onTranslate})()" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border-focus);border-radius:50px;background:var(--accent-l);cursor:pointer;font-family:inherit;color:var(--accent)">🌐 Перевести</button>`;
+function showOriginalArticle(id){
+  const a=articles.find(x=>x.id===id); if(!a) return;
+  renderArticleContent(a,a.title,a.text);
+  renderSidebar(a); renderComments(a);
+  const bar=document.getElementById('translateBar');
+  if(bar) bar.innerHTML=`<button onclick="retranslateArticle(${id})" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border-focus);border-radius:50px;background:var(--accent-l);cursor:pointer;font-family:inherit;color:var(--accent)">${T.translateBtn}</button>`;
+}
+
+async function retranslateArticle(id){
+  const a=articles.find(x=>x.id===id); if(!a) return;
+  const bar=document.getElementById('translateBar');
+  if(bar) bar.innerHTML=`<span style="font-size:.78rem;color:var(--muted)">${T.translating}</span>`;
+  const [tt,tb]=await Promise.all([googleTranslate(a.title,currentLang),googleTranslate(a.text,currentLang)]);
+  if(tt||tb){
+    renderArticleContent(a,tt||a.title,tb||a.text);
+    renderSidebar(a); renderComments(a);
+    const bar2=document.getElementById('translateBar');
+    if(bar2) bar2.innerHTML=`<span style="font-size:.78rem;color:var(--muted)">${T.translatedAuto}</span><button onclick="showOriginalArticle(${id})" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border);border-radius:50px;background:var(--surface);cursor:pointer;font-family:inherit;color:var(--accent)">${T.showOriginal}</button>`;
   }
 }
 
-async function openArticle(id){
+async function openArticle(id, skipViewCount=false){
   const a=articles.find(x=>x.id===id); if(!a) return;
-  prevPage=document.querySelector('.page.active').id.replace('page-','');
+  const wasActive = document.querySelector('.page.active')?.id.replace('page-','');
+  if(wasActive !== 'article') prevPage = wasActive || 'feed';
   currentArticleId=id;
-  a.views++;
-  save();
-  renderFeed();
+  if(!skipViewCount){ a.views++; save(); renderFeed(); }
 
   renderArticleContent(a, a.title, a.text);
   renderSidebar(a);
@@ -1069,17 +1100,14 @@ async function openArticle(id){
       const newBody  = translatedBody  || a.text;
       renderArticleContent(a, newTitle, newBody);
       renderSidebar(a);
-
-      // Rebuild comments with translate bar
       renderComments(a);
-
-      buildTranslateBar(a, true,
-        null,
-        function(){ renderArticleContent(a,a.title,a.text); renderSidebar(a); renderComments(a); buildTranslateBar(a,false,async function(){ const [t,b]=await Promise.all([googleTranslate(a.title,currentLang),googleTranslate(a.text,currentLang)]); renderArticleContent(a,t||a.title,b||a.text); renderSidebar(a); renderComments(a); buildTranslateBar(a,true,null,function(){}); },function(){}); }
-      );
+      const bar2 = document.getElementById('translateBar');
+      if(bar2) bar2.innerHTML=`
+        <span style="font-size:.78rem;color:var(--muted)">${T.translatedAuto}</span>
+        <button onclick="showOriginalArticle(${a.id})" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border);border-radius:50px;background:var(--surface);cursor:pointer;font-family:inherit;color:var(--accent)">${T.showOriginal}</button>`;
     } else {
       const bar2 = document.getElementById('translateBar');
-      if(bar2) bar2.innerHTML='';
+      if(bar2) bar2.innerHTML=`<button onclick="retranslateArticle(${a.id})" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border-focus);border-radius:50px;background:var(--accent-l);cursor:pointer;font-family:inherit;color:var(--accent)">${T.translateBtn}</button>`;
     }
   }
 }
