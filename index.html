@@ -7,11 +7,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --bg: #f5f5f7;
@@ -20,13 +16,13 @@
       --border-focus: #a78bfa;
       --text-primary: #1a1a2e;
       --text-secondary: #6b6b8a;
-      --placeholder: rgba(107, 107, 138, 0.5);
+      --placeholder: rgba(107,107,138,0.5);
       --accent: #7c3aed;
       --accent-light: #ede9fe;
-      --accent-glow: rgba(124, 58, 237, 0.18);
-      --shadow-sm: 0 1px 4px rgba(60, 40, 120, 0.07);
-      --shadow-md: 0 4px 24px rgba(60, 40, 120, 0.10);
-      --shadow-focus: 0 0 0 4px rgba(124, 58, 237, 0.13);
+      --accent-glow: rgba(124,58,237,0.18);
+      --shadow-sm: 0 1px 4px rgba(60,40,120,0.07);
+      --shadow-md: 0 4px 24px rgba(60,40,120,0.10);
+      --shadow-focus: 0 0 0 4px rgba(124,58,237,0.13);
       --radius: 14px;
       --radius-sm: 9px;
     }
@@ -34,104 +30,150 @@
     html, body {
       height: 100%;
       background: var(--bg);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       color: var(--text-primary);
       -webkit-font-smoothing: antialiased;
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* ── Header ── */
+    /* ══════════════════════════════
+       HEADER / NAV
+    ══════════════════════════════ */
     header {
-      width: 100%;
-      padding: 28px 40px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 58px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      user-select: none;
+      justify-content: space-between;
     }
 
     .logo {
-      font-size: 1.45rem;
+      font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: -0.03em;
       color: var(--accent);
       display: flex;
       align-items: center;
       gap: 8px;
+      cursor: pointer;
+      user-select: none;
     }
 
     .logo-icon {
-      width: 34px;
-      height: 34px;
+      width: 30px; height: 30px;
       background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 10px rgba(124, 58, 237, 0.28);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(124,58,237,0.28);
     }
 
-    .logo-icon svg {
-      width: 18px;
-      height: 18px;
-      fill: none;
-      stroke: #fff;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .logo-icon svg { width:16px; height:16px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+    nav { display: flex; gap: 6px; }
+
+    .nav-btn {
+      padding: 7px 16px;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
     }
 
-    /* ── Main layout ── */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 20px 60px;
-      gap: 0;
+    .nav-btn:hover { background: var(--accent-light); color: var(--accent); }
+
+    .nav-btn.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(124,58,237,0.25);
     }
 
-    .editor-wrapper {
-      width: 100%;
+    /* ══════════════════════════════
+       PAGE SYSTEM
+    ══════════════════════════════ */
+    .page { display: none; animation: fadeIn 0.28s ease; }
+    .page.active { display: block; }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ══════════════════════════════
+       EDITOR PAGE
+    ══════════════════════════════ */
+    .editor-page {
       max-width: 720px;
+      margin: 0 auto;
+      padding: 36px 20px 80px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
-    /* ── Tagline ── */
-    .tagline {
+    .editor-tagline {
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    .tagline h1 {
-      font-size: 2rem;
+    .editor-tagline h1 {
+      font-size: 1.8rem;
       font-weight: 700;
       letter-spacing: -0.04em;
-      color: var(--text-primary);
       line-height: 1.18;
     }
 
-    .tagline p {
-      margin-top: 8px;
-      font-size: 0.95rem;
+    .editor-tagline p {
+      margin-top: 6px;
+      font-size: 0.9rem;
       color: var(--text-secondary);
-      font-weight: 400;
-      letter-spacing: -0.01em;
     }
 
-    /* ── Channel row ── */
+    /* Channel row: avatar + name + link */
     .channel-row {
       display: flex;
+      align-items: center;
       gap: 10px;
-      width: 100%;
+    }
+
+    .avatar-upload {
+      flex-shrink: 0;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      border: 1.8px dashed var(--border);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s, background 0.2s, transform 0.18s;
+    }
+
+    .avatar-upload:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      transform: scale(1.06);
+    }
+
+    .avatar-upload input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width:100%; height:100%;
+    }
+
+    .avatar-upload svg { width:16px; height:16px; stroke: var(--text-secondary); stroke-width:2; fill:none; stroke-linecap:round; }
+    .avatar-upload:hover svg { stroke: var(--accent); }
+
+    .avatar-upload img.avatar-preview {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     .input-field {
@@ -142,137 +184,98 @@
       border-radius: var(--radius-sm);
       padding: 0 16px;
       font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 400;
+      font-size: 0.88rem;
       color: var(--text-primary);
       outline: none;
       box-shadow: var(--shadow-sm);
-      transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.18s ease;
+      transition: border-color 0.22s, box-shadow 0.22s, background 0.18s;
     }
 
-    .input-field::placeholder {
-      color: var(--placeholder);
-    }
+    .input-field::placeholder { color: var(--placeholder); }
+    .input-field:hover { border-color: #c4b5fd; background: #fdfdff; }
+    .input-field:focus { border-color: var(--border-focus); box-shadow: var(--shadow-focus); }
+    .input-field.input-wide { flex: 2; }
 
-    .input-field:hover {
-      border-color: #c4b5fd;
-      background: #fdfdff;
-    }
-
-    .input-field:focus {
-      border-color: var(--border-focus);
-      box-shadow: var(--shadow-focus);
-      background: var(--surface);
-    }
-
-    .input-field.input-wide {
-      flex: 2.2;
-    }
-
-    /* ── Article textarea ── */
-    .textarea-wrapper {
-      position: relative;
+    /* Article title */
+    .title-input {
       width: 100%;
+      height: 52px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0 18px;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      outline: none;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.22s, box-shadow 0.22s;
     }
+
+    .title-input::placeholder { color: var(--placeholder); font-weight: 400; }
+    .title-input:hover { border-color: #c4b5fd; }
+    .title-input:focus { border-color: var(--border-focus); box-shadow: var(--shadow-focus); }
+
+    /* Textarea */
+    .textarea-wrapper { position: relative; }
 
     .article-textarea {
       width: 100%;
-      min-height: 260px;
+      min-height: 240px;
       background: var(--surface);
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px 24px;
+      padding: 20px 22px;
       font-family: inherit;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.7;
+      font-size: 0.97rem;
+      line-height: 1.75;
       color: var(--text-primary);
       outline: none;
       resize: vertical;
       box-shadow: var(--shadow-md);
-      transition: border-color 0.22s ease, box-shadow 0.25s ease, background 0.18s ease;
+      transition: border-color 0.22s, box-shadow 0.25s;
       caret-color: var(--accent);
     }
 
-    .article-textarea::placeholder {
-      color: var(--placeholder);
-    }
+    .article-textarea::placeholder { color: var(--placeholder); }
+    .article-textarea:hover { border-color: #c4b5fd; }
+    .article-textarea:focus { border-color: var(--border-focus); box-shadow: var(--shadow-focus), var(--shadow-md); }
 
-    .article-textarea:hover {
-      border-color: #c4b5fd;
-      background: #fdfdff;
-    }
-
-    .article-textarea:focus {
-      border-color: var(--border-focus);
-      box-shadow: var(--shadow-focus), var(--shadow-md);
-      background: var(--surface);
-    }
-
-    /* blinking cursor indicator when focused */
     .cursor-hint {
-      position: absolute;
-      bottom: 14px;
-      right: 18px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      position: absolute; bottom:12px; right:16px;
+      display: flex; align-items: center; gap:5px;
+      font-size: 0.72rem; color: var(--text-secondary);
+      opacity:0; transform:translateY(4px);
+      transition: opacity 0.2s, transform 0.2s;
       pointer-events: none;
     }
 
-    .cursor-hint.visible {
-      opacity: 0.6;
-      transform: translateY(0);
-    }
+    .cursor-hint.visible { opacity:0.6; transform:translateY(0); }
 
     .cursor-blink {
-      width: 2px;
-      height: 14px;
+      width:2px; height:13px;
       background: var(--accent);
       border-radius: 2px;
       animation: blink 1s step-end infinite;
     }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* ── Image upload ── */
-    .upload-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-    }
-
-    .upload-label {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      letter-spacing: 0.01em;
-    }
+    /* Image upload */
+    .upload-area { display:flex; flex-direction:column; align-items:center; gap:0; }
+    .upload-label { font-size:0.78rem; color:var(--text-secondary); margin-bottom:8px; }
 
     .upload-box {
-      width: 110px;
-      height: 110px;
+      width:100px; height:100px;
       background: var(--surface);
       border: 1.8px dashed var(--border);
       border-radius: var(--radius);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer;
+      transition: border-color 0.22s, background 0.22s, box-shadow 0.22s, transform 0.18s;
       box-shadow: var(--shadow-sm);
-      position: relative;
-      overflow: hidden;
+      position:relative; overflow:hidden;
     }
 
     .upload-box:hover {
@@ -282,181 +285,410 @@
       transform: scale(1.03);
     }
 
-    .upload-box:active {
-      transform: scale(0.98);
-    }
-
-    .upload-box input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
+    .upload-box:active { transform:scale(0.98); }
+    .upload-box input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
 
     .plus-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
+      width:34px; height:34px; border-radius:50%;
       background: var(--accent-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease;
+      display:flex; align-items:center; justify-content:center;
+      transition: background 0.2s;
     }
 
-    .upload-box:hover .plus-icon {
-      background: rgba(124, 58, 237, 0.2);
-    }
+    .upload-box:hover .plus-icon { background: rgba(124,58,237,0.2); }
+    .plus-icon svg { width:18px; height:18px; stroke:var(--accent); stroke-width:2.4; stroke-linecap:round; fill:none; }
 
-    .plus-icon svg {
-      width: 20px;
-      height: 20px;
-      stroke: var(--accent);
-      stroke-width: 2.4;
-      stroke-linecap: round;
-      fill: none;
-    }
-
-    /* Preview image in upload box */
     .upload-box img.preview {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
       border-radius: calc(var(--radius) - 2px);
     }
 
-    /* ── Submit button ── */
+    /* Submit */
     .submit-btn {
-      align-self: center;
-      margin-top: 6px;
-      padding: 13px 42px;
-      background: linear-gradient(135deg, #7c3aed 0%, #9f67ff 100%);
+      align-self:center;
+      padding:13px 42px;
+      background: linear-gradient(135deg,#7c3aed 0%,#9f67ff 100%);
+      color:#fff;
+      font-family:inherit; font-size:0.93rem; font-weight:600;
+      border:none; border-radius:50px; cursor:pointer;
+      box-shadow: 0 4px 18px rgba(124,58,237,0.35);
+      transition: box-shadow 0.22s, transform 0.18s, filter 0.18s;
+      outline:none;
+    }
+
+    .submit-btn:hover { box-shadow:0 6px 28px rgba(124,58,237,0.45); transform:translateY(-2px); filter:brightness(1.06); }
+    .submit-btn:active { transform:scale(0.97); }
+
+    /* ══════════════════════════════
+       FEED PAGE
+    ══════════════════════════════ */
+    .feed-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .feed-header {
+      margin-bottom: 24px;
+    }
+
+    .feed-header h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .feed-header p {
+      margin-top: 4px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .feed-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .feed-empty .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    .feed-empty p { font-size:0.9rem; }
+
+    /* Article card */
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: box-shadow 0.22s, transform 0.18s, border-color 0.18s;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .article-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: #c4b5fd;
+    }
+
+    .card-avatar {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a78bfa, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: #fff;
+      overflow: hidden;
+    }
+
+    .card-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+
+    .card-body { flex: 1; min-width: 0; }
+
+    .card-channel {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-channel:hover { text-decoration: underline; }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .card-excerpt {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .card-image {
+      flex-shrink: 0;
+      width: 90px; height: 72px;
+      border-radius: 9px;
+      overflow: hidden;
+      background: var(--accent-light);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .card-image img { width:100%; height:100%; object-fit:cover; }
+
+    .card-image-placeholder {
+      width: 28px; height: 28px;
+      opacity: 0.3;
+    }
+
+    .card-image-placeholder svg { width:100%; height:100%; stroke: var(--accent); stroke-width:1.5; fill:none; }
+
+    .read-btn {
+      margin-left: auto;
+      padding: 6px 16px;
+      background: var(--accent-light);
+      color: var(--accent);
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.78rem;
       font-weight: 600;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      letter-spacing: -0.01em;
-      box-shadow: 0 4px 18px rgba(124, 58, 237, 0.35);
-      transition: box-shadow 0.22s ease, transform 0.18s ease, filter 0.18s ease;
-      outline: none;
+      transition: background 0.18s, transform 0.15s;
     }
 
-    .submit-btn:hover {
-      box-shadow: 0 6px 28px rgba(124, 58, 237, 0.45);
-      transform: translateY(-2px);
-      filter: brightness(1.06);
+    .read-btn:hover { background: rgba(124,58,237,0.2); transform: scale(1.04); }
+
+    /* ══════════════════════════════
+       ARTICLE VIEW PAGE
+    ══════════════════════════════ */
+    .article-view-page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 36px 20px 80px;
     }
 
-    .submit-btn:active {
-      transform: translateY(0) scale(0.97);
-      box-shadow: 0 2px 10px rgba(124, 58, 237, 0.3);
-    }
-
-    /* ── Success toast ── */
-    .toast {
-      position: fixed;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: #1a1a2e;
-      color: #fff;
-      padding: 13px 28px;
-      border-radius: 50px;
-      font-size: 0.88rem;
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.83rem;
       font-weight: 500;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.28s ease, transform 0.28s ease;
-      white-space: nowrap;
-      box-shadow: 0 6px 28px rgba(0,0,0,0.18);
-      z-index: 999;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 20px 40px 28px;
-      font-size: 0.78rem;
       color: var(--text-secondary);
-      opacity: 0.7;
+      cursor: pointer;
+      margin-bottom: 28px;
+      padding: 7px 14px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: color 0.18s, border-color 0.18s, background 0.18s;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 560px) {
-      .channel-row {
-        flex-direction: column;
-      }
-      .tagline h1 {
-        font-size: 1.5rem;
-      }
-      main {
-        padding: 24px 16px 48px;
-      }
+    .back-btn:hover { color: var(--accent); border-color: var(--border-focus); background: var(--accent-light); }
+    .back-btn svg { width:14px; height:14px; stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+
+    .article-view-header { margin-bottom: 24px; }
+
+    .article-view-channel {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      padding: 5px 10px 5px 5px;
+      border-radius: 50px;
+      transition: background 0.18s;
+    }
+
+    .article-view-channel:hover { background: var(--accent-light); }
+
+    .article-view-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg,#a78bfa,#7c3aed);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.9rem; font-weight:700; color:#fff;
+      overflow: hidden;
+    }
+
+    .article-view-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+
+    .article-view-channel-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .article-view-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.22;
+      margin-bottom: 20px;
+    }
+
+    .article-view-image {
+      width: 100%;
+      border-radius: var(--radius);
+      max-height: 320px;
+      object-fit: cover;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .article-view-body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #2a2a40;
+      white-space: pre-wrap;
+    }
+
+    /* ══════════════════════════════
+       CHANNEL PAGE
+    ══════════════════════════════ */
+    .channel-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 36px 20px 80px;
+    }
+
+    .channel-hero {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .channel-hero-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#a78bfa,#7c3aed);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.8rem; font-weight:700; color:#fff;
+      flex-shrink:0; overflow:hidden;
+    }
+
+    .channel-hero-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+
+    .channel-hero-info h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .channel-hero-link {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .channel-hero-link:hover { text-decoration: underline; }
+
+    .channel-articles-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ══════════════════════════════
+       TOAST
+    ══════════════════════════════ */
+    .toast {
+      position:fixed; bottom:32px; left:50%;
+      transform:translateX(-50%) translateY(20px);
+      background:#1a1a2e; color:#fff;
+      padding:12px 26px;
+      border-radius:50px;
+      font-size:0.85rem; font-weight:500;
+      opacity:0; pointer-events:none;
+      transition:opacity 0.26s, transform 0.26s;
+      white-space:nowrap;
+      box-shadow:0 6px 28px rgba(0,0,0,0.18);
+      z-index:999;
+    }
+
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      text-align:center;
+      padding:16px 40px 24px;
+      font-size:0.75rem;
+      color:var(--text-secondary);
+      opacity:0.6;
+    }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width:560px) {
+      .channel-row { flex-wrap:wrap; }
+      .input-field.input-wide { flex: 1 1 100%; }
+      header { padding:0 16px; }
+      .article-view-title { font-size:1.3rem; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">
+    <div class="logo" onclick="showPage('feed')">
       <div class="logo-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M4 6h16M4 10h10M4 14h12M4 18h8"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h10M4 14h12M4 18h8"/></svg>
       </div>
       Статьевед
     </div>
+    <nav>
+      <button class="nav-btn" id="nav-feed" onclick="showPage('feed')">Лента</button>
+      <button class="nav-btn active" id="nav-editor" onclick="showPage('editor')">Написать</button>
+    </nav>
   </header>
 
-  <main>
-    <div class="editor-wrapper">
+  <!-- ═══ EDITOR PAGE ═══ -->
+  <div class="page active" id="page-editor">
+    <div class="editor-page">
 
-      <!-- Tagline -->
-      <div class="tagline">
+      <div class="editor-tagline">
         <h1>Публикуйте научные статьи</h1>
         <p>Делитесь знаниями с научным сообществом</p>
       </div>
 
-      <!-- Channel inputs -->
+      <!-- Channel row: avatar + name + link -->
       <div class="channel-row">
-        <input
-          class="input-field"
-          type="text"
-          id="channelName"
-          placeholder="Назовите свой канал"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <input
-          class="input-field input-wide"
-          type="text"
-          id="channelLink"
-          placeholder="Добавьте ссылку на свой Telegram или YouTube-канал (необязательно)"
-          autocomplete="off"
-          spellcheck="false"
-        />
+        <div class="avatar-upload" id="avatarUpload" title="Добавить фото канала">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <input type="file" accept="image/*" id="avatarInput" tabindex="-1" />
+        </div>
+        <input class="input-field" type="text" id="channelName" placeholder="Назовите свой канал" autocomplete="off" spellcheck="false" />
+        <input class="input-field input-wide" type="text" id="channelLink" placeholder="Ссылка на Telegram или YouTube (необязательно)" autocomplete="off" spellcheck="false" />
       </div>
+
+      <!-- Article title -->
+      <input class="title-input" type="text" id="articleTitle" placeholder="Название статьи" autocomplete="off" spellcheck="false" />
 
       <!-- Article textarea -->
       <div class="textarea-wrapper">
-        <textarea
-          class="article-textarea"
-          id="articleText"
-          placeholder="Напишите свою статью..."
-          spellcheck="true"
-        ></textarea>
+        <textarea class="article-textarea" id="articleText" placeholder="Напишите свою статью..." spellcheck="true"></textarea>
         <div class="cursor-hint" id="cursorHint">
           <span class="cursor-blink"></span>
           <span>Редактирование</span>
@@ -468,98 +700,316 @@
         <span class="upload-label">Добавить изображение (необязательно)</span>
         <div class="upload-box" id="uploadBox">
           <div class="plus-icon">
-            <svg viewBox="0 0 24 24">
-              <line x1="12" y1="5" x2="12" y2="19"/>
-              <line x1="5" y1="12" x2="19" y2="12"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
           <input type="file" accept="image/*" id="imageInput" tabindex="-1" />
         </div>
       </div>
 
-      <!-- Submit -->
       <button class="submit-btn" id="submitBtn">Опубликовать статью</button>
 
     </div>
-  </main>
+  </div>
+
+  <!-- ═══ FEED PAGE ═══ -->
+  <div class="page" id="page-feed">
+    <div class="feed-page">
+      <div class="feed-header">
+        <h2>Лента статей</h2>
+        <p>Все опубликованные материалы</p>
+      </div>
+      <div id="feedList">
+        <div class="feed-empty">
+          <div class="empty-icon">📄</div>
+          <p>Пока нет ни одной статьи.<br>Напиши первую!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ARTICLE VIEW PAGE ═══ -->
+  <div class="page" id="page-article">
+    <div class="article-view-page">
+      <div class="back-btn" id="articleBackBtn" onclick="goBackFromArticle()">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Назад
+      </div>
+      <div id="articleViewContent"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CHANNEL PAGE ═══ -->
+  <div class="page" id="page-channel">
+    <div class="channel-page">
+      <div class="back-btn" onclick="showPage('feed')">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Лента
+      </div>
+      <div id="channelViewContent"></div>
+    </div>
+  </div>
 
   <footer>© 2026 Статьевед — платформа для научных публикаций</footer>
 
-  <!-- Toast -->
-  <div class="toast" id="toast">Статья успешно опубликована!</div>
+  <div class="toast" id="toast"></div>
 
   <script>
-    // Blinking cursor hint on textarea focus
-    const textarea = document.getElementById('articleText');
+    // ── State ──────────────────────────────────────────
+    const articles = [];
+    let articleImageDataUrl = null;
+    let avatarDataUrl = null;
+    let previousPage = 'feed';
+
+    // ── Page navigation ────────────────────────────────
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const nb = document.getElementById('nav-' + name);
+      if (nb) nb.classList.add('active');
+    }
+
+    // ── Blinking cursor hint ───────────────────────────
+    const textarea  = document.getElementById('articleText');
     const cursorHint = document.getElementById('cursorHint');
+    textarea.addEventListener('focus', () => cursorHint.classList.add('visible'));
+    textarea.addEventListener('blur',  () => cursorHint.classList.remove('visible'));
 
-    textarea.addEventListener('focus', () => {
-      cursorHint.classList.add('visible');
-    });
-    textarea.addEventListener('blur', () => {
-      cursorHint.classList.remove('visible');
-    });
-
-    // Image upload preview
-    const imageInput = document.getElementById('imageInput');
-    const uploadBox  = document.getElementById('uploadBox');
-    const plusIcon   = uploadBox.querySelector('.plus-icon');
-
-    imageInput.addEventListener('change', (e) => {
+    // ── Avatar upload ──────────────────────────────────
+    document.getElementById('avatarInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = (ev) => {
-        // Remove existing preview if any
-        const existing = uploadBox.querySelector('img.preview');
+      reader.onload = ev => {
+        avatarDataUrl = ev.target.result;
+        const box = document.getElementById('avatarUpload');
+        const existing = box.querySelector('img.avatar-preview');
         if (existing) existing.remove();
-
         const img = document.createElement('img');
-        img.src = ev.target.result;
-        img.className = 'preview';
-        img.alt = 'Превью изображения';
-        uploadBox.insertBefore(img, imageInput);
-        plusIcon.style.display = 'none';
+        img.src = avatarDataUrl;
+        img.className = 'avatar-preview';
+        img.alt = 'Аватар канала';
+        box.insertBefore(img, box.querySelector('input'));
+        box.querySelector('svg').style.display = 'none';
       };
       reader.readAsDataURL(file);
     });
 
-    // Submit action with toast
-    const submitBtn = document.getElementById('submitBtn');
-    const toast     = document.getElementById('toast');
-    let toastTimer  = null;
+    // ── Article image upload ───────────────────────────
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        articleImageDataUrl = ev.target.result;
+        const box  = document.getElementById('uploadBox');
+        const existing = box.querySelector('img.preview');
+        if (existing) existing.remove();
+        const img = document.createElement('img');
+        img.src = articleImageDataUrl;
+        img.className = 'preview';
+        img.alt = 'Превью';
+        box.insertBefore(img, box.querySelector('input'));
+        box.querySelector('.plus-icon').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    });
 
-    submitBtn.addEventListener('click', () => {
-      const channel = document.getElementById('channelName').value.trim();
-      const text    = textarea.value.trim();
+    // ── Publish ────────────────────────────────────────
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const channelName = document.getElementById('channelName').value.trim();
+      const channelLink = document.getElementById('channelLink').value.trim();
+      const title       = document.getElementById('articleTitle').value.trim();
+      const text        = textarea.value.trim();
 
       if (!text) {
-        textarea.focus();
-        textarea.style.borderColor = '#f87171';
-        textarea.style.boxShadow   = '0 0 0 4px rgba(248,113,113,0.15)';
-        setTimeout(() => {
-          textarea.style.borderColor = '';
-          textarea.style.boxShadow   = '';
-        }, 1400);
+        shake(textarea);
         return;
       }
 
-      // Show toast
-      clearTimeout(toastTimer);
-      toast.textContent = channel
-        ? `Статья от «${channel}» опубликована!`
-        : 'Статья успешно опубликована!';
-      toast.classList.add('show');
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+      const article = {
+        id:          Date.now(),
+        channelName: channelName || 'Без названия',
+        channelLink: channelLink || '',
+        avatarUrl:   avatarDataUrl,
+        title:       title || 'Без заголовка',
+        text:        text,
+        imageUrl:    articleImageDataUrl,
+        date:        new Date().toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' })
+      };
 
-      // Button animation
-      submitBtn.textContent = 'Опубликовано ✓';
-      submitBtn.style.background = 'linear-gradient(135deg, #059669 0%, #34d399 100%)';
+      articles.unshift(article);
+      renderFeed();
+
+      // Success feedback
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Опубликовано ✓';
+      btn.style.background = 'linear-gradient(135deg,#059669 0%,#34d399 100%)';
       setTimeout(() => {
-        submitBtn.textContent = 'Опубликовать статью';
-        submitBtn.style.background = '';
+        btn.textContent = 'Опубликовать статью';
+        btn.style.background = '';
       }, 2600);
+
+      showToast(channelName ? `Статья от «${channelName}» опубликована!` : 'Статья опубликована!');
+
+      // Reset form
+      document.getElementById('articleTitle').value = '';
+      textarea.value = '';
+      articleImageDataUrl = null;
+      const box = document.getElementById('uploadBox');
+      const prev = box.querySelector('img.preview');
+      if (prev) prev.remove();
+      box.querySelector('.plus-icon').style.display = 'flex';
+
+      showPage('feed');
     });
+
+    // ── Render feed ────────────────────────────────────
+    function renderFeed(filterChannel) {
+      const list = document.getElementById('feedList');
+      const data = filterChannel ? articles.filter(a => a.channelName === filterChannel) : articles;
+
+      if (data.length === 0) {
+        list.innerHTML = `
+          <div class="feed-empty">
+            <div class="empty-icon">📄</div>
+            <p>${filterChannel ? 'У этого канала пока нет статей.' : 'Пока нет ни одной статьи.<br>Напиши первую!'}</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = data.map(a => `
+        <div class="article-card" onclick="openArticle(${a.id})">
+          <div class="card-avatar" onclick="event.stopPropagation(); openChannel('${escHtml(a.channelName)}')">
+            ${a.avatarUrl ? `<img src="${a.avatarUrl}" alt="avatar"/>` : escHtml(a.channelName.charAt(0).toUpperCase())}
+          </div>
+          <div class="card-body">
+            <span class="card-channel" onclick="event.stopPropagation(); openChannel('${escHtml(a.channelName)}')">
+              ${escHtml(a.channelName)}
+            </span>
+            <div class="card-title">${escHtml(a.title)}</div>
+            <div class="card-excerpt">${escHtml(a.text)}</div>
+            <div class="card-footer">
+              <span style="font-size:0.74rem;color:var(--text-secondary)">${a.date}</span>
+              <button class="read-btn" onclick="event.stopPropagation(); openArticle(${a.id})">Читать →</button>
+            </div>
+          </div>
+          ${a.imageUrl ? `
+          <div class="card-image">
+            <img src="${a.imageUrl}" alt="обложка"/>
+          </div>` : `
+          <div class="card-image">
+            <div class="card-image-placeholder">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+          </div>`}
+        </div>
+      `).join('');
+    }
+
+    // ── Open single article ────────────────────────────
+    function openArticle(id) {
+      const a = articles.find(x => x.id === id);
+      if (!a) return;
+      previousPage = document.querySelector('.page.active').id.replace('page-', '');
+
+      const view = document.getElementById('articleViewContent');
+      view.innerHTML = `
+        <div class="article-view-header">
+          <div class="article-view-channel" onclick="openChannel('${escHtml(a.channelName)}')">
+            <div class="article-view-avatar">
+              ${a.avatarUrl ? `<img src="${a.avatarUrl}" alt="avatar"/>` : escHtml(a.channelName.charAt(0).toUpperCase())}
+            </div>
+            <span class="article-view-channel-name">${escHtml(a.channelName)}</span>
+          </div>
+          <h1 class="article-view-title">${escHtml(a.title)}</h1>
+          ${a.channelLink ? `<a href="${escHtml(a.channelLink)}" target="_blank" rel="noopener" style="font-size:0.8rem;color:var(--accent);text-decoration:none;margin-bottom:16px;display:inline-block">🔗 ${escHtml(a.channelLink)}</a>` : ''}
+        </div>
+        ${a.imageUrl ? `<img class="article-view-image" src="${a.imageUrl}" alt="обложка"/>` : ''}
+        <div class="article-view-body">${escHtml(a.text)}</div>
+      `;
+      showPage('article');
+    }
+
+    function goBackFromArticle() {
+      showPage(previousPage === 'channel' ? 'channel' : 'feed');
+    }
+
+    // ── Open channel page ──────────────────────────────
+    function openChannel(channelName) {
+      const channelArticles = articles.filter(a => a.channelName === channelName);
+      const sample = channelArticles[0] || {};
+
+      const content = document.getElementById('channelViewContent');
+      content.innerHTML = `
+        <div class="channel-hero">
+          <div class="channel-hero-avatar">
+            ${sample.avatarUrl ? `<img src="${sample.avatarUrl}" alt="avatar"/>` : escHtml(channelName.charAt(0).toUpperCase())}
+          </div>
+          <div class="channel-hero-info">
+            <h2>${escHtml(channelName)}</h2>
+            ${sample.channelLink ? `<a class="channel-hero-link" href="${escHtml(sample.channelLink)}" target="_blank" rel="noopener">${escHtml(sample.channelLink)}</a>` : ''}
+            <div style="margin-top:6px;font-size:0.8rem;color:var(--text-secondary)">${channelArticles.length} ${plural(channelArticles.length,'статья','статьи','статей')}</div>
+          </div>
+        </div>
+        <div class="channel-articles-title">Статьи канала</div>
+        <div id="channelFeedList"></div>
+      `;
+
+      const list = document.getElementById('channelFeedList');
+      list.innerHTML = channelArticles.map(a => `
+        <div class="article-card" onclick="openArticle(${a.id})">
+          <div class="card-body">
+            <div class="card-title">${escHtml(a.title)}</div>
+            <div class="card-excerpt">${escHtml(a.text)}</div>
+            <div class="card-footer">
+              <span style="font-size:0.74rem;color:var(--text-secondary)">${a.date}</span>
+              <button class="read-btn" onclick="event.stopPropagation();openArticle(${a.id})">Читать →</button>
+            </div>
+          </div>
+          ${a.imageUrl ? `<div class="card-image"><img src="${a.imageUrl}" alt="обложка"/></div>` : ''}
+        </div>
+      `).join('');
+
+      previousPage = 'channel';
+      showPage('channel');
+    }
+
+    // ── Helpers ────────────────────────────────────────
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
+    }
+
+    function plural(n, one, few, many) {
+      const mod10 = n % 10, mod100 = n % 100;
+      if (mod10 === 1 && mod100 !== 11) return `${n} ${one}`;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return `${n} ${few}`;
+      return `${n} ${many}`;
+    }
+
+    function shake(el) {
+      el.style.borderColor = '#f87171';
+      el.style.boxShadow   = '0 0 0 4px rgba(248,113,113,0.15)';
+      el.focus();
+      setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1400);
+    }
+
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    // Start on editor
+    showPage('editor');
   </script>
 
 </body>
