@@ -1004,7 +1004,43 @@ function delArticle(id){
 // ═══════════════════════════════════════════════════
 //  OPEN ARTICLE
 // ═══════════════════════════════════════════════════
-function openArticle(id){
+function renderArticleContent(a, titleText, bodyText){
+  document.getElementById('artContent').innerHTML=`
+    <div class="av-ch" onclick="openChPage('${esc(a.channelName)}')">
+      <div class="av-ch-av">${a.avatarUrl?`<img src="${a.avatarUrl}" alt=""/>`:esc(a.channelName.charAt(0).toUpperCase())}</div>
+      <span class="av-ch-name">${esc(a.channelName)}</span>
+    </div>
+    <h1 class="av-title" id="av-title-text">${esc(titleText)}</h1>
+    ${a.channelLink?`<a href="${esc(a.channelLink)}" target="_blank" rel="noopener" style="font-size:.77rem;color:var(--accent);text-decoration:none;margin-bottom:13px;display:inline-block">🔗 ${esc(a.channelLink)}</a>`:''}
+    ${a.imageUrl?`<img class="av-img" src="${a.imageUrl}" alt=""/>`:''}
+    <div class="av-body" id="av-body-text">${esc(bodyText)}</div>
+    <div id="translateBar" style="margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap"></div>
+  `;
+}
+
+async function googleTranslate(text, targetLang){
+  if(!text || targetLang === 'ru' || targetLang === currentLang) return null;
+  // Only translate if target lang differs from 'ru' (articles are written in ru by default)
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data[0].map(s=>s[0]).join('');
+  } catch(e){ return null; }
+}
+
+function buildTranslateBar(a, isTranslated, onTranslate, onOriginal){
+  const bar = document.getElementById('translateBar');
+  if(!bar) return;
+  if(isTranslated){
+    bar.innerHTML=`<span style="font-size:.78rem;color:var(--muted)">🌐 Переведено автоматически</span>
+      <button onclick="(${onOriginal})()" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border);border-radius:50px;background:var(--surface);cursor:pointer;font-family:inherit;color:var(--accent)">Показать оригинал</button>`;
+  } else {
+    bar.innerHTML=`<button onclick="(${onTranslate})()" style="font-size:.76rem;padding:4px 12px;border:1px solid var(--border-focus);border-radius:50px;background:var(--accent-l);cursor:pointer;font-family:inherit;color:var(--accent)">🌐 Перевести</button>`;
+  }
+}
+
+async function openArticle(id){
   const a=articles.find(x=>x.id===id); if(!a) return;
   prevPage=document.querySelector('.page.active').id.replace('page-','');
   currentArticleId=id;
@@ -1012,20 +1048,40 @@ function openArticle(id){
   save();
   renderFeed();
 
-  document.getElementById('artContent').innerHTML=`
-    <div class="av-ch" onclick="openChPage('${esc(a.channelName)}')">
-      <div class="av-ch-av">${a.avatarUrl?`<img src="${a.avatarUrl}" alt=""/>`:esc(a.channelName.charAt(0).toUpperCase())}</div>
-      <span class="av-ch-name">${esc(a.channelName)}</span>
-    </div>
-    <h1 class="av-title">${esc(a.title)}</h1>
-    ${a.channelLink?`<a href="${esc(a.channelLink)}" target="_blank" rel="noopener" style="font-size:.77rem;color:var(--accent);text-decoration:none;margin-bottom:13px;display:inline-block">🔗 ${esc(a.channelLink)}</a>`:''}
-    ${a.imageUrl?`<img class="av-img" src="${a.imageUrl}" alt="обложка"/>`:''}
-    <div class="av-body">${esc(a.text)}</div>
-  `;
-
+  renderArticleContent(a, a.title, a.text);
   renderSidebar(a);
   renderComments(a);
   showPage('article');
+
+  // Auto-translate if user language differs from Russian
+  if(currentLang !== 'ru'){
+    // Show loading indicator
+    const bar = document.getElementById('translateBar');
+    if(bar) bar.innerHTML = `<span style="font-size:.78rem;color:var(--muted)">🌐 Перевожу...</span>`;
+
+    const [translatedTitle, translatedBody] = await Promise.all([
+      googleTranslate(a.title, currentLang),
+      googleTranslate(a.text, currentLang)
+    ]);
+
+    if(translatedTitle || translatedBody){
+      const newTitle = translatedTitle || a.title;
+      const newBody  = translatedBody  || a.text;
+      renderArticleContent(a, newTitle, newBody);
+      renderSidebar(a);
+
+      // Rebuild comments with translate bar
+      renderComments(a);
+
+      buildTranslateBar(a, true,
+        null,
+        function(){ renderArticleContent(a,a.title,a.text); renderSidebar(a); renderComments(a); buildTranslateBar(a,false,async function(){ const [t,b]=await Promise.all([googleTranslate(a.title,currentLang),googleTranslate(a.text,currentLang)]); renderArticleContent(a,t||a.title,b||a.text); renderSidebar(a); renderComments(a); buildTranslateBar(a,true,null,function(){}); },function(){}); }
+      );
+    } else {
+      const bar2 = document.getElementById('translateBar');
+      if(bar2) bar2.innerHTML='';
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════
@@ -1094,16 +1150,28 @@ function renderComments(a){
       <button class="comment-send" onclick="sendComment(${a.id})">${T.send}</button>
     </div>
     <div id="cmList">
-      ${a.comments.map(c=>`
-        <div class="comment-item">
+      ${a.comments.map((c,i)=>`
+        <div class="comment-item" id="cm-item-${a.id}-${i}">
           <div class="cm-avatar">${c.avatarUrl?`<img src="${c.avatarUrl}" alt=""/>`:esc((c.author||'?').charAt(0).toUpperCase())}</div>
           <div class="cm-body">
             <div class="cm-author">${esc(c.author||T.anonymous)}</div>
-            <div class="cm-text">${esc(c.text)}</div>
-            <div class="cm-date">${c.date}</div>
+            <div class="cm-text" id="cm-text-${a.id}-${i}">${esc(c.text)}</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:3px">
+              <span class="cm-date">${c.date}</span>
+              ${currentLang!=='ru'?`<button onclick="translateComment(${a.id},${i},'${esc(c.text)}')" style="font-size:.68rem;padding:2px 8px;border:1px solid var(--border);border-radius:50px;background:transparent;cursor:pointer;font-family:inherit;color:var(--accent)">🌐</button>`:''}
+            </div>
           </div>
         </div>`).join('')}
     </div>`;
+}
+
+async function translateComment(articleId, idx, originalText){
+  const el = document.getElementById(`cm-text-${articleId}-${idx}`);
+  if(!el) return;
+  el.style.opacity='0.5';
+  const translated = await googleTranslate(originalText, currentLang);
+  if(translated){ el.textContent = translated; }
+  el.style.opacity='1';
 }
 
 function sendComment(id){
