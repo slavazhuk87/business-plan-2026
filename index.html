@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Статьевед</title>
+  <title>Статьевед — научные статьи</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -405,20 +405,54 @@ let toastTimer;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3200)}
 
 // ═══════════════════════════════════════════════════
-//  SPAM DETECTION
+//  SPAM & MODERATION
 // ═══════════════════════════════════════════════════
+
+// Indecent / toxic words list (Russian + transliterated)
+const BAD_WORDS = [
+  'блять','бля','блядь','сука','пизда','хуй','хуя','хуе','ёбан','ебан','ёб ','еб ','еблан',
+  'пиздец','мудак','мудила','залупа','ёбаный','ебаный','долбоёб','долбоеб','пидор','педик',
+  'уёбок','уебок','шлюха','дрочить','дрочил','проститутка','ублюдок','придурок',
+  'cука','cyка','xуй','xуя','пиздa','блядь',
+  // common toxic phrases
+  'иди нахуй','иди нахуй','пошёл нахуй','пошёл нахуй','иди в жопу',
+  // transliterated
+  'blyad','suka','pizda','khuy','eban','muday','urod'
+];
+
+function containsBadWord(text){
+  const t = text.toLowerCase();
+  return BAD_WORDS.some(w => t.includes(w));
+}
+
 function isSpam(text){
-  if(!text||text.length<20) return true;
-  // Check ratio of non-letter chars (gibberish)
-  const letters = text.replace(/[^a-zA-Zа-яА-ЯёЁ]/g,'').length;
-  if(letters/text.length < 0.4) return true;
-  // Check for repeated characters (aaaaaaa / 123123123)
-  if(/(.)\1{6,}/.test(text)) return true;
-  // Check word variety: if unique words < 20% of total words
-  const words = text.toLowerCase().match(/[a-zA-Zа-яА-ЯёЁ]+/g)||[];
-  if(words.length < 3) return true;
-  const unique = new Set(words).size;
-  if(words.length > 10 && unique/words.length < 0.15) return true;
+  if(!text || text.trim().length === 0) return true;
+
+  const t = text.trim();
+
+  // Block indecent content first
+  if(containsBadWord(t)) return 'indecent';
+
+  // Very short texts are fine for comments (e.g. "Круто!", "Очень красиво!")
+  // Only block if it's pure gibberish
+  const words = t.toLowerCase().match(/[a-zA-Zа-яА-ЯёЁ]+/g) || [];
+
+  // Less than 2 words AND less than 5 chars total — likely empty/useless
+  if(words.length === 0) return true;
+
+  // Check ratio of letter chars — if < 35% it's mostly symbols/numbers
+  const letters = t.replace(/[^a-zA-Zа-яА-ЯёЁ]/g,'').length;
+  if(t.length > 8 && letters / t.length < 0.35) return true;
+
+  // One character repeated 6+ times in a row (aaaaaaa, !!!!!!)
+  if(/(.)\1{5,}/.test(t)) return true;
+
+  // For longer texts: check word variety (catches "фыв фыв фыв фыв фыв фыв...")
+  if(words.length > 12){
+    const unique = new Set(words).size;
+    if(unique / words.length < 0.12) return true;
+  }
+
   return false;
 }
 
@@ -538,9 +572,13 @@ document.getElementById('pubBtn').addEventListener('click',()=>{
   if(!text){shake(atx);return}
 
   // Spam check
-  if(isSpam(text)){
+  const spamResult = isSpam(text);
+  if(spamResult){
+    banner.textContent = spamResult === 'indecent'
+      ? '🚫 Статья содержит недопустимые слова и не может быть опубликована. Пожалуйста, соблюдайте культуру общения.'
+      : '⚠️ Похоже, это спам или бессмысленный текст. Пожалуйста, напишите настоящую статью.';
     banner.classList.add('show');
-    setTimeout(()=>banner.classList.remove('show'),4000);
+    setTimeout(()=>banner.classList.remove('show'),4500);
     return;
   }
   banner.classList.remove('show');
@@ -737,7 +775,13 @@ function renderComments(a){
 function sendComment(id){
   const box=document.getElementById('cmBox');
   const text=box.value.trim(); if(!text) return;
-  if(isSpam(text)){toast('Комментарий похож на спам и не был добавлен.');return}
+  const cmSpam = isSpam(text);
+  if(cmSpam){
+    toast(cmSpam === 'indecent'
+      ? '🚫 Комментарий содержит недопустимые слова и не был добавлен.'
+      : '⚠️ Комментарий похож на спам и не был добавлен.');
+    return;
+  }
   const a=articles.find(x=>x.id===id); if(!a) return;
   a.comments.push({
     author:profile.name||'Аноним',
