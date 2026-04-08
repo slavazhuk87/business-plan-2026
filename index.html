@@ -259,15 +259,15 @@
 
 <header>
   <div class="hdr-left">
-    <div class="hdr-avatar" id="hdrAvatar" onclick="showPage('my-channel')" title="Мой канал"></div>
-    <div class="logo" onclick="showPage('feed')">
+    <div class="hdr-avatar" id="hdrAvatar" title="Мой канал"></div>
+    <div class="logo" id="logoBtn">
       <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h10M4 14h12M4 18h8"/></svg></div>
       Статьевед
     </div>
   </div>
   <nav>
-    <button class="nav-btn" id="nav-feed" onclick="showPage('feed')" data-i18n="feed">Лента</button>
-    <button class="nav-btn active" id="nav-editor" onclick="showPage('editor')" data-i18n="write">Написать</button>
+    <button class="nav-btn" id="nav-feed" data-i18n="feed">Лента</button>
+    <button class="nav-btn active" id="nav-editor" data-i18n="write">Написать</button>
   </nav>
 </header>
 
@@ -315,7 +315,7 @@
 <div class="page" id="page-article">
   <div class="article-wrap">
     <div class="article-main">
-      <div class="back-btn" onclick="goBack()">
+      <div class="back-btn" id="backFromArticle">
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="back">Назад</span>
       </div>
       <div id="artContent"></div>
@@ -328,7 +328,7 @@
 <!-- MY CHANNEL -->
 <div class="page" id="page-my-channel">
   <div class="my-ch-page">
-    <div class="back-btn" onclick="showPage('feed')">
+    <div class="back-btn" id="backFromMyChannel">
       <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="toFeed">Лента</span>
     </div>
     <div class="ch-hero">
@@ -338,7 +338,7 @@
         <span id="myChLinkEl"></span>
         <div class="ch-total-stats" id="myChStats"></div>
       </div>
-      <button class="gear-btn" onclick="showPage('settings')" title="Настройки">
+      <button class="gear-btn" id="gearBtn" title="Настройки">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </div>
@@ -350,7 +350,7 @@
 <!-- OTHER CHANNEL -->
 <div class="page" id="page-channel">
   <div class="ch-page">
-    <div class="back-btn" onclick="showPage('feed')">
+    <div class="back-btn" id="backFromChannel">
       <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="toFeed">Лента</span>
     </div>
     <div id="chViewContent"></div>
@@ -360,7 +360,7 @@
 <!-- SETTINGS -->
 <div class="page" id="page-settings">
   <div class="settings-page">
-    <div class="back-btn" onclick="showPage('my-channel')">
+    <div class="back-btn" id="backFromSettings">
       <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="toMyChannel">Мой канал</span>
     </div>
     <h2 data-i18n="settingsTitle">Настройки канала</h2>
@@ -1328,6 +1328,18 @@ document.getElementById('saveBtn').addEventListener('click',()=>{
 load();
 // Restore saved language
 try{ const sl=localStorage.getItem('sv_lang'); if(sl&&LANGS[sl]){currentLang=sl;T=LANGS[sl];} }catch(e){}
+
+// ── Wire all static event listeners (no onclick in HTML) ──
+document.getElementById('logoBtn').addEventListener('click', ()=>showPage('feed'));
+document.getElementById('hdrAvatar').addEventListener('click', ()=>showPage('my-channel'));
+document.getElementById('nav-feed').addEventListener('click', ()=>showPage('feed'));
+document.getElementById('nav-editor').addEventListener('click', ()=>showPage('editor'));
+document.getElementById('backFromArticle').addEventListener('click', ()=>goBack());
+document.getElementById('backFromMyChannel').addEventListener('click', ()=>showPage('feed'));
+document.getElementById('backFromChannel').addEventListener('click', ()=>showPage('feed'));
+document.getElementById('backFromSettings').addEventListener('click', ()=>showPage('my-channel'));
+document.getElementById('gearBtn').addEventListener('click', ()=>showPage('settings'));
+
 applyTranslations();
 buildLangSwitcher();
 updateHdrAvatar();
